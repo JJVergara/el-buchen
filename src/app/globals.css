@@ -19,3 +19,38 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Add these styles for the carousel */
+.carousel-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.carousel-wrapper .carousel {
+  height: 100%;
+}
+
+.carousel .slide {
+  height: 600px;
+  background: transparent;
+}
+
+.carousel .slide img {
+  object-fit: cover;
+  height: 100%;
+}
+
+/* Optional: Improve carousel indicators */
+.carousel .control-dots {
+  bottom: 20px;
+}
+
+.carousel .control-dots .dot {
+  background: white;
+  box-shadow: none;
+  opacity: 0.6;
+}
+
+.carousel .control-dots .dot.selected {
+  opacity: 1;
+}
