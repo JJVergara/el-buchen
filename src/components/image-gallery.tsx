@@ -20,7 +20,10 @@ export function ImageGallery() {
     status,
   } = useInfiniteQuery({
     queryKey: ["gallery-images"],
-    queryFn: ({ pageParam = 0 }) => getImages(pageParam, IMAGES_PER_PAGE),
+    queryFn: ({ pageParam = 0 }) => {
+      console.log("Fetching images for page:", pageParam)
+      return getImages(pageParam, IMAGES_PER_PAGE)
+    },
     getNextPageParam: (lastPage, allPages) => {
       return lastPage.length === IMAGES_PER_PAGE ? allPages.length : undefined
     },
@@ -30,6 +33,10 @@ export function ImageGallery() {
   const allImages = data?.pages.flat() ?? []
   const isLoading = status === "pending"
   const isError = status === "error"
+
+  console.log("All pages", data?.pages)
+  console.log("All images", allImages)
+  console.log("Last page", data?.pages[data?.pages.length - 1])
 
   if (isError) {
     return (
