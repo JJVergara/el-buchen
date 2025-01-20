@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
-import { getImages } from "@/lib/get-images"
+import { getImages } from "../lib/queries/get-images"
 import { LoadingSpinner } from "@/components/loading-spinner"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { GalleryImage } from "../../types/gallery"

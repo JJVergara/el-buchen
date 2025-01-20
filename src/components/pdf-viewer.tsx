@@ -7,9 +7,10 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 import { LoadingSpinner } from "./loading-spinner"
 import "react-pdf/dist/Page/AnnotationLayer.css"
 import "react-pdf/dist/Page/TextLayer.css"
+import getPdfs from "@/lib/queries/get-pdfs"
 
 // Configure PDF.js worker
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`
 
 interface PDFViewerProps {
   url: string
@@ -23,6 +24,18 @@ export function PDFViewer({ url }: PDFViewerProps) {
   function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
     setNumPages(numPages)
   }
+
+
+  async function getPdfUrl() {
+    const documents = await getPdfs()
+    console.log(documents)
+    const pdfUrl = documents[0].name
+    console.log(pdfUrl)
+    return pdfUrl
+  }
+
+  const pdfUrl = getPdfUrl()
+  console.log("El pdf url es: ", pdfUrl)
 
   function changePage(offset: number) {
     setPageNumber((prevPageNumber) => {
@@ -110,4 +123,3 @@ export function PDFViewer({ url }: PDFViewerProps) {
     </div>
   )
 }
-
