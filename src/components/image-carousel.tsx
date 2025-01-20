@@ -3,24 +3,9 @@
 import * as React from "react"
 import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel"
-import { cn } from "@/lib/utils"
-import { useCallback, useState } from "react"
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 
-interface CarouselImage {
-  src: string
-  alt: string
-  title: string
-  description: string
-}
-
-const images: CarouselImage[] = [
+const images = [
   {
     src: "/placeholder.svg?height=600&width=1200",
     alt: "Nature landscape 1",
@@ -41,67 +26,29 @@ const images: CarouselImage[] = [
   },
 ]
 
-export default function ImageCarousel() {
-  const [isLoading, setIsLoading] = useState(true)
-
-  const handleImageLoad = useCallback(() => {
-    setIsLoading(false)
-  }, [])
-
+export function ImageCarousel() {
   return (
-    <section aria-label="Image Carousel" className="w-full max-w-6xl mx-auto">
-      <Carousel className="relative">
-        <CarouselContent>
-          {images.map((image, index) => (
-            <CarouselItem key={index}>
-              <div className="relative p-1">
-                <Card className="border-0">
-                  <CardContent className="relative flex aspect-[2/1] items-center justify-center p-0 overflow-hidden">
-                    <div
-                      className={cn(
-                        "absolute inset-0 bg-gray-200 animate-pulse",
-                        !isLoading && "hidden"
-                      )}
-                      aria-hidden="true"
-                    />
-                    <Image
-                      src={image.src}
-                      alt={image.alt}
-                      fill
-                      priority={index === 0}
-                      className={cn(
-                        "object-cover transition-opacity duration-300",
-                        isLoading ? "opacity-0" : "opacity-100"
-                      )}
-                      onLoad={handleImageLoad}
-                    />
-                    <div 
-                      className="absolute inset-0 bg-black/30 flex flex-col items-center justify-center text-white"
-                      aria-hidden="true"
-                    >
-                      <h2 className="text-3xl md:text-4xl font-bold mb-2">
-                        {image.title}
-                      </h2>
-                      <p className="text-lg md:text-xl text-center max-w-2xl px-4">
-                        {image.description}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious 
-          className="left-4"
-          aria-label="Previous slide"
-        />
-        <CarouselNext 
-          className="right-4"
-          aria-label="Next slide"
-        />
-      </Carousel>
-    </section>
+    <Carousel className="w-full max-w-6xl mx-auto">
+      <CarouselContent>
+        {images.map((image, index) => (
+          <CarouselItem key={index}>
+            <div className="relative p-1">
+              <Card className="border-0">
+                <CardContent className="relative flex aspect-[2/1] items-center justify-center p-0">
+                  <Image src={image.src || "/placeholder.svg"} alt={image.alt} fill className="object-cover" />
+                  <div className="absolute inset-0 bg-black/30 flex flex-col items-center justify-center text-white">
+                    <h2 className="text-3xl md:text-4xl font-bold mb-2">{image.title}</h2>
+                    <p className="text-lg md:text-xl">{image.description}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext />
+    </Carousel>
   )
 }
 

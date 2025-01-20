@@ -1,85 +1,69 @@
 "use client"
 
-import * as React from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { Leaf } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { usePathname } from "next/navigation"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Menu } from "lucide-react"
-import { cn } from "@/lib/utils"
 
-interface NavItem {
-  href: string
-  label: string
-}
-
-const navItems: NavItem[] = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
-]
-
-export default function Navbar() {
+export function Navbar() {
   const pathname = usePathname()
-  const [isOpen, setIsOpen] = React.useState(false)
 
-  const NavLink = React.useCallback(
-    ({ href, label }: NavItem) => {
-      const isActive = pathname === href
-      return (
-        <Link
-          href={href}
-          className={cn(
-            "text-sm font-medium transition-colors hover:text-[#0f401e]",
-            isActive ? "text-[#0f401e]" : "text-muted-foreground"
-          )}
-          onClick={() => setIsOpen(false)}
-        >
-          {label}
-        </Link>
-      )
-    },
-    [pathname]
-  )
+  const links = [
+    { href: "/", label: "Home" },
+    { href: "/about", label: "About" },
+    { href: "/contact", label: "Contact" },
+    { href: "/testimonials", label: "Testimonials" },
+    { href: "/pictures", label: "Gallery" },
+    { href: "/press", label: "Press" },
+  ]
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
-        <Link 
-          href="/" 
-          className="flex items-center space-x-2"
-          onClick={() => setIsOpen(false)}
-        >
+        <Link href="/" className="flex items-center space-x-2">
+          <Leaf className="h-6 w-6 text-[#0f401e]" />
           <span className="font-bold text-xl">El Buchen</span>
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="ml-auto hidden md:flex gap-6">
-          {navItems.map((item) => (
-            <NavLink key={item.href} {...item} />
+        <nav className="hidden md:flex ml-auto gap-6">
+          {links.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`text-sm font-medium transition-colors hover:text-[#0f401e] ${
+                pathname === link.href ? "text-[#0f401e]" : "text-muted-foreground"
+              }`}
+            >
+              {link.label}
+            </Link>
           ))}
         </nav>
 
         {/* Mobile Navigation */}
-        <Sheet open={isOpen} onOpenChange={setIsOpen}>
-          <SheetTrigger asChild className="md:hidden ml-auto">
-            <Button 
-              variant="ghost" 
-              size="icon"
-              aria-label="Open menu"
-            >
-              <Menu className="h-6 w-6" />
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="right" className="w-[240px] sm:w-[280px]">
-            <nav className="flex flex-col gap-4 mt-8">
-              {navItems.map((item) => (
-                <NavLink key={item.href} {...item} />
+        <div className="flex md:hidden ml-auto">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Menu className="h-5 w-5" />
+                <span className="sr-only">Toggle menu</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-[200px]">
+              {links.map((link) => (
+                <DropdownMenuItem key={link.href} asChild>
+                  <Link href={link.href} className={pathname === link.href ? "text-[#0f401e]" : ""}>
+                    {link.label}
+                  </Link>
+                </DropdownMenuItem>
               ))}
-            </nav>
-          </SheetContent>
-        </Sheet>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
     </header>
   )
 }
+

@@ -1,51 +1,10 @@
-'use client';
-
-import { Suspense } from "react"
-import Image from 'next/image';
-import Link from 'next/link';
+import { Navbar } from "@/components/navbar"
+import { ImageCarousel } from "@/components/image-carousel"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Leaf, Shield, Heart, ArrowRight } from "lucide-react"
-import Navbar from "@/components/navbar"
-import ImageCarousel from "@/components/image-carousel"
-
-interface Feature {
-  icon: typeof Leaf
-  title: string
-  description: string
-}
-
-const features: Feature[] = [
-  {
-    icon: Leaf,
-    title: "Conservation",
-    description: "Protecting natural habitats and biodiversity through sustainable practices",
-  },
-  {
-    icon: Shield,
-    title: "Education",
-    description: "Raising awareness about environmental issues and solutions",
-  },
-  {
-    icon: Heart,
-    title: "Community",
-    description: "Building a network of environmental stewards and advocates",
-  },
-]
-
-function FeatureCard({ icon: Icon, title, description }: Feature) {
-  return (
-    <Card className="border-2 border-[#0f401e]/10">
-      <CardContent className="flex flex-col items-center space-y-4 p-6">
-        <Icon className="h-12 w-12 text-[#0f401e]" />
-        <h3 className="text-xl font-bold">{title}</h3>
-        <p className="text-center text-muted-foreground">
-          {description}
-        </p>
-      </CardContent>
-    </Card>
-  )
-}
+import Link from "next/link"
+import Image from "next/image"
 
 export default function Home() {
   return (
@@ -55,9 +14,7 @@ export default function Home() {
         {/* Hero Section */}
         <section className="w-full py-12 md:py-24 lg:py-32 bg-[#0f401e]/5">
           <div className="container px-4 md:px-6">
-            <Suspense fallback={<div className="h-[400px] bg-[#0f401e]/10 animate-pulse rounded-xl" />}>
-              <ImageCarousel />
-            </Suspense>
+            <ImageCarousel />
           </div>
         </section>
 
@@ -73,9 +30,33 @@ export default function Home() {
               </div>
             </div>
             <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-3 lg:gap-12">
-              {features.map((feature) => (
-                <FeatureCard key={feature.title} {...feature} />
-              ))}
+              <Card className="border-2 border-[#0f401e]/10">
+                <CardContent className="flex flex-col items-center space-y-4 p-6">
+                  <Leaf className="h-12 w-12 text-[#0f401e]" />
+                  <h3 className="text-xl font-bold">Conservation</h3>
+                  <p className="text-center text-muted-foreground">
+                    Protecting natural habitats and biodiversity through sustainable practices
+                  </p>
+                </CardContent>
+              </Card>
+              <Card className="border-2 border-[#0f401e]/10">
+                <CardContent className="flex flex-col items-center space-y-4 p-6">
+                  <Shield className="h-12 w-12 text-[#0f401e]" />
+                  <h3 className="text-xl font-bold">Education</h3>
+                  <p className="text-center text-muted-foreground">
+                    Raising awareness about environmental issues and solutions
+                  </p>
+                </CardContent>
+              </Card>
+              <Card className="border-2 border-[#0f401e]/10">
+                <CardContent className="flex flex-col items-center space-y-4 p-6">
+                  <Heart className="h-12 w-12 text-[#0f401e]" />
+                  <h3 className="text-xl font-bold">Community</h3>
+                  <p className="text-center text-muted-foreground">
+                    Building a network of environmental stewards and advocates
+                  </p>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </section>
@@ -84,16 +65,13 @@ export default function Home() {
         <section className="w-full py-12 md:py-24 lg:py-32 bg-[#0f401e]/5">
           <div className="container px-4 md:px-6">
             <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
-              <div className="relative aspect-video overflow-hidden rounded-xl lg:order-last">
-                <Image
-                  src="/placeholder.svg?height=400&width=600"
-                  alt="About El Buchen"
-                  fill
-                  className="object-cover"
-                  sizes="(min-width: 1280px) 600px, (min-width: 1024px) 400px, 100vw"
-                  priority
-                />
-              </div>
+              <Image
+                src="/placeholder.svg?height=400&width=600"
+                width={600}
+                height={400}
+                alt="About El Buchen"
+                className="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last"
+              />
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
                   <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">About El Buchen</h2>
@@ -156,3 +134,4 @@ export default function Home() {
     </div>
   )
 }
+
