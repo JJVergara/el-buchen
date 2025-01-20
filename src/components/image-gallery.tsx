@@ -1,60 +1,48 @@
 "use client"
-
-import { useEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import Image from "next/image"
+import { useInfiniteQuery } from "@tanstack/react-query"
 import { getImages } from "../lib/queries/get-images"
 import { LoadingSpinner } from "@/components/loading-spinner"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { GalleryImage } from "../../types/gallery"
 
+const IMAGES_PER_PAGE = 12
+
 export function ImageGallery() {
-  const [images, setImages] = useState<GalleryImage[]>([])
-  const [page, setPage] = useState(0)
-  const [loading, setLoading] = useState(false)
-  const [hasMore, setHasMore] = useState(true)
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null)
-  const observerTarget = useRef(null)
+  const observerTarget = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    const loadImages = async () => {
-      if (loading || !hasMore) return
+  const {
+    data,
+    hasNextPage,
+    isFetchingNextPage,
+    status,
+  } = useInfiniteQuery({
+    queryKey: ["gallery-images"],
+    queryFn: ({ pageParam = 0 }) => getImages(pageParam, IMAGES_PER_PAGE),
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage.length === IMAGES_PER_PAGE ? allPages.length : undefined
+    },
+    initialPageParam: 0,
+  })
 
-      setLoading(true)
-      const newImages = await getImages(page)
-      setLoading(false)
+  const allImages = data?.pages.flat() ?? []
+  const isLoading = status === "pending"
+  const isError = status === "error"
 
-      if (newImages.length === 0) {
-        setHasMore(false)
-        return
-      }
-
-      setImages((prev) => [...prev, ...newImages])
-    }
-
-    loadImages()
-  }, [page])
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && hasMore && !loading) {
-          setPage((prev) => prev + 1)
-        }
-      },
-      { threshold: 1.0 },
+  if (isError) {
+    return (
+      <div className="text-center py-8 text-red-500">
+        Error loading images. Please try again later.
+      </div>
     )
-
-    if (observerTarget.current) {
-      observer.observe(observerTarget.current)
-    }
-
-    return () => observer.disconnect()
-  }, [hasMore, loading])
+  }
 
   return (
     <>
       <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4 p-4">
-        {images.map((image) => (
+        {allImages.map((image) => (
           <div key={image.id} className="break-inside-avoid" onClick={() => setSelectedImage(image)}>
             <div className="relative group cursor-pointer overflow-hidden rounded-lg">
               <Image
@@ -75,11 +63,17 @@ export function ImageGallery() {
         ))}
       </div>
 
-      {loading && <LoadingSpinner />}
+      {(isLoading || isFetchingNextPage) && <LoadingSpinner />}
 
-      {!loading && hasMore && <div ref={observerTarget} className="h-10" />}
+      {!isLoading && hasNextPage && (
+        <div ref={observerTarget} className="h-10" />
+      )}
 
-      {!hasMore && <div className="text-center py-8 text-muted-foreground">No more images to load</div>}
+      {!hasNextPage && !isLoading && (
+        <div className="text-center py-8 text-muted-foreground">
+          No more images to load
+        </div>
+      )}
 
       <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
         {selectedImage && (

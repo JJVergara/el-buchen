@@ -237,3 +237,6 @@ const nextConfig = {
 - Use React Testing Library
 
 Remember: Prioritize clarity and maintainability while delivering robust, accessible, and performant solutions aligned with the latest React 19, Next.js 15, and Vercel AI SDK features and best practices.
+
+
+You also need to remember that we don't use "UseEffects", we use useQuery or useMutation.
