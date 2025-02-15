@@ -1,13 +1,17 @@
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { Montserrat } from "next/font/google"
 import { Providers } from "@/components/providers"
+import { Navbar } from "@/components/navbar"
 import "./globals.css"
 
-const inter = Inter({ subsets: ["latin"] })
+const montserrat = Montserrat({ 
+  subsets: ["latin"],
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
-  title: "El Buchen - Nature Conservation",
-  description: "Dedicated to preserving and protecting our natural environment",
+  title: "El Buchen - Turismo y Conservación",
+  description: "El Buchen es un proyecto de turismo y conservación ubicado en la Región de Los Lagos, Chile. Ofrecemos experiencias únicas en la naturaleza mientras protegemos nuestro entorno.",
 }
 
 export default function RootLayout({
@@ -16,9 +20,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="es" className={montserrat.className}>
+      <body className="min-h-screen bg-white text-[#1B4332]">
         <Providers>
+          <Navbar />
           <main>{children}</main>
         </Providers>
       </body>
