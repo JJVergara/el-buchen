@@ -15,34 +15,8 @@ import { useCallback, useState } from "react"
 import { useQuery } from "@tanstack/react-query"
 import { getImages } from "@/lib/queries/get-images"
 import { GalleryImage } from "../../types/gallery"
-
-interface CarouselImage {
-  src: string
-  alt: string
-  title: string
-  description: string
-}
-
-const DEFAULT_IMAGES: CarouselImage[] = [
-  {
-    src: "/placeholder.svg?height=600&width=1200",
-    alt: "Nature landscape 1",
-    title: "Discover Natural Beauty",
-    description: "Experience the wonders of untouched wilderness",
-  },
-  {
-    src: "/placeholder.svg?height=600&width=1200",
-    alt: "Nature landscape 2",
-    title: "Preserve Our Environment",
-    description: "Join us in protecting our natural heritage",
-  },
-  {
-    src: "/placeholder.svg?height=600&width=1200",
-    alt: "Nature landscape 3",
-    title: "Connect with Nature",
-    description: "Find peace in the heart of nature",
-  },
-]
+import { CarouselImage } from "../../types/carousel"
+import { defaultCarouselImages } from "../../data/carousel"
 
 function mapGalleryToCarousel(images: GalleryImage[]): CarouselImage[] {
   return images.map((image) => ({
@@ -61,7 +35,7 @@ export function ImageCarousel() {
     queryFn: () => getImages(0, 5),
   })
 
-  const images = galleryImages.length > 0 ? mapGalleryToCarousel(galleryImages) : DEFAULT_IMAGES
+  const images = galleryImages.length > 0 ? mapGalleryToCarousel(galleryImages) : defaultCarouselImages
 
   const handleImageLoad = useCallback(() => {
     setIsLoading(false)

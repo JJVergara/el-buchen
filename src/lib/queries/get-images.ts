@@ -9,7 +9,6 @@ export interface CarouselImage {
 }
 
 export async function getImages(page: number, limit = 12): Promise<GalleryImage[]> {
-  // First verify our environment variables and Supabase client
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
     throw new Error('Supabase environment variables are not configured')
   }
