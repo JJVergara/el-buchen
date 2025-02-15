@@ -47,7 +47,6 @@ export default function ServicesPage() {
   return (
     <div className="flex flex-col min-h-screen">
       <main className="flex-1">
-        {/* Hero Section */}
         <section className="w-full py-12 md:py-24 lg:py-32 bg-[#1B4332]">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center text-white">
@@ -61,7 +60,6 @@ export default function ServicesPage() {
           </div>
         </section>
 
-        {/* Services Grid */}
         <section className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -88,7 +86,6 @@ export default function ServicesPage() {
           </div>
         </section>
 
-        {/* CTA Section */}
         <section className="w-full py-12 md:py-24 lg:py-32 bg-[#1B4332] text-white">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">

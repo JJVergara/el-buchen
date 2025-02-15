@@ -42,7 +42,6 @@ export function Navbar() {
           ))}
         </nav>
 
-        {/* Mobile Navigation */}
         <div className="flex md:hidden ml-auto">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

@@ -9,7 +9,6 @@ export default function Home() {
   return (
     <div className="flex min-h-screen flex-col">
       <main className="flex-1">
-        {/* Hero Section */}
         <section className="w-full py-12 md:py-24 lg:py-32 bg-[#1B4332]">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center text-white">
@@ -26,7 +25,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* About Preview Section */}
         <section className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
@@ -58,7 +56,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Services Section */}
         <section className="w-full py-12 md:py-24 lg:py-32 bg-[#1B4332]/5">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
@@ -101,7 +98,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* CTA Section */}
         <section className="w-full py-12 md:py-24 lg:py-32 bg-[#1B4332] text-white">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
@@ -123,7 +119,6 @@ export default function Home() {
         </section>
       </main>
 
-      {/* Footer */}
       <footer className="w-full border-t border-[#1B4332]/20 py-6">
         <div className="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row md:py-0">
           <div className="flex items-center gap-4 px-8 md:px-0">

@@ -4,14 +4,12 @@ import { Leaf } from "lucide-react"
 import Link from "next/link"
 
 export default function PressPage() {
-  // In a real application, you would get this URL from your CMS or API
   const pdfUrl = "/sample.pdf"
 
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
       <main className="flex-1">
-        {/* Hero Section */}
         <section className="w-full py-12 md:py-24 lg:py-32 bg-[#0f401e]/5">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
@@ -28,7 +26,6 @@ export default function PressPage() {
           </div>
         </section>
 
-        {/* PDF Viewer Section */}
         <section className="w-full py-12 md:py-24">
           <div className="container px-4 md:px-6">
             <PDFViewer url={pdfUrl} />
@@ -36,7 +33,6 @@ export default function PressPage() {
         </section>
       </main>
 
-      {/* Footer */}
       <footer className="w-full border-t py-6">
         <div className="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row md:py-0">
           <div className="flex items-center gap-4 px-8 md:px-0">

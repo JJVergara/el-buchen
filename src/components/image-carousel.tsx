@@ -58,7 +58,7 @@ export function ImageCarousel() {
 
   const { data: galleryImages = [], error } = useQuery({
     queryKey: ["carousel-images"],
-    queryFn: () => getImages(0, 5), // Get first 5 images for carousel
+    queryFn: () => getImages(0, 5),
   })
 
   const images = galleryImages.length > 0 ? mapGalleryToCarousel(galleryImages) : DEFAULT_IMAGES

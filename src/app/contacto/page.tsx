@@ -28,7 +28,6 @@ export default function ContactoPage() {
     const response = await submitContactForm(formData)
     if (response.success) {
       toast.success(response.message)
-      // Reset form
       setFormKey((prev) => prev + 1)
     } else {
       toast.error("Algo salió mal. Por favor intenta nuevamente.")
@@ -38,7 +37,6 @@ export default function ContactoPage() {
   return (
     <div className="flex flex-col min-h-screen">
       <main className="flex-1">
-        {/* Hero Section */}
         <section className="w-full py-12 md:py-24 lg:py-32 bg-[#1B4332]">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center text-white">
@@ -52,11 +50,9 @@ export default function ContactoPage() {
           </div>
         </section>
 
-        {/* Contact Form and Info */}
         <section className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <div className="grid gap-12 lg:grid-cols-2">
-              {/* Contact Form */}
               <Card className="p-6 border-2 border-[#1B4332]/10">
                 <CardContent className="space-y-6">
                   <div className="space-y-2">
@@ -113,7 +109,6 @@ export default function ContactoPage() {
                 </CardContent>
               </Card>
 
-              {/* Contact Information */}
               <div className="space-y-8">
                 <div className="space-y-6">
                   <h2 className="text-2xl font-bold">Información de Contacto</h2>

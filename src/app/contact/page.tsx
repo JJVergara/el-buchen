@@ -5,9 +5,9 @@ import { Navbar } from "@/components/navbar"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
-import { Leaf, Phone, Mail, MessageSquare, MapPin, Clock } from "lucide-react"
+import { Leaf, Phone, Mail, MapPin, Clock } from "lucide-react"
 import { submitContactForm } from "../actions/contact"
 import { useFormStatus } from "react-dom"
 import { toast } from "sonner"
@@ -29,7 +29,6 @@ export default function ContactPage() {
     const response = await submitContactForm(formData)
     if (response.success) {
       toast.success(response.message)
-      // Reset form
       setFormKey((prev) => prev + 1)
     } else {
       toast.error("Something went wrong. Please try again.")

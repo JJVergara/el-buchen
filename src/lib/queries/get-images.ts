@@ -17,7 +17,6 @@ export async function getImages(page: number, limit = 12): Promise<GalleryImage[
   console.log('Supabase URL:', process.env.NEXT_PUBLIC_SUPABASE_URL)
   console.log('Supabase Anon Key (first 8 chars):', process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY.substring(0, 8))
 
-  // List all buckets first to debug
   const { data: buckets, error: bucketsError } = await supabase
     .storage
     .listBuckets()
@@ -31,7 +30,6 @@ export async function getImages(page: number, limit = 12): Promise<GalleryImage[
 
   const offset = page * limit
 
-  // Try to list files from a specific bucket
   const { data: files, error } = await supabase.storage.from('images').list();
 
   if (error) {
@@ -46,7 +44,6 @@ export async function getImages(page: number, limit = 12): Promise<GalleryImage[
     return []
   }
 
-  // Transform file data into GalleryImage format
   return files.map((file) => {
     if (!file.name) {
       throw new Error('File name is missing from Supabase response')
