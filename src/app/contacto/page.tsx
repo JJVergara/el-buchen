@@ -10,6 +10,7 @@ import { Mail, Phone, MapPin, Clock } from "lucide-react"
 import { submitContactForm } from "../actions/contact"
 import { useFormStatus } from "react-dom"
 import { toast } from "sonner"
+import Footer from "@/components/footer"
 
 function SubmitButton() {
   const { pending } = useFormStatus()
@@ -167,6 +168,7 @@ export default function ContactoPage() {
           </div>
         </section>
       </main>
+      <Footer />
     </div>
   )
 } 

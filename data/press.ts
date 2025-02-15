@@ -6,7 +6,7 @@ export const pressArticles: PressArticle[] = [
     source: "Diario Local",
     date: "15 de Marzo, 2024",
     description: "Reportaje sobre la iniciativa de conservación de El Buchén y su impacto en la región.",
-    image: "/images/press-1.jpg",
+    image: "/test.JPG",
     link: "#"
   },
   {
@@ -14,7 +14,7 @@ export const pressArticles: PressArticle[] = [
     source: "Revista Turismo",
     date: "10 de Febrero, 2024",
     description: "Análisis del modelo de turismo sustentable implementado en El Buchén.",
-    image: "/images/press-2.jpg",
+    image: "/test.JPG",
     link: "#"
   },
   {
@@ -22,7 +22,7 @@ export const pressArticles: PressArticle[] = [
     source: "Portal Ambiental",
     date: "5 de Enero, 2024",
     description: "Entrevista sobre los programas educativos y de conservación desarrollados en El Buchén.",
-    image: "/images/press-3.jpg",
+    image: "/test.JPG",
     link: "#"
   }
 ] 

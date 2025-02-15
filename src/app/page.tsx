@@ -1,10 +1,10 @@
 import { ImageCarousel } from "@/components/image-carousel"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Leaf, Mountain, Trees, Compass } from "lucide-react"
+import { Video, Trees, Bird} from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
-
+import { VideoModal } from "@/components/video-modal"
+import Footer from "@/components/footer"
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col">
@@ -32,9 +32,8 @@ export default function Home() {
                 <div className="space-y-2">
                   <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Bienvenidos a El Buchen</h2>
                   <p className="max-w-[600px] text-[#2D6A4F] text-lg md:text-xl">
-                    El Buchen es un proyecto de turismo y conservación ubicado en la Región de Los Lagos, Chile. 
-                    Nuestro objetivo es proteger y preservar la naturaleza mientras ofrecemos experiencias únicas 
-                    que conectan a las personas con nuestro entorno natural.
+                  En la intimidad precordillera, a 42 kilómetros de Curicó se encuentra el Parque El Buchén. Exclusivos fundos de agrado ubicados en torno a una extensa área de conservación de bosque del tipo valdiviano, en la que es posible apreciar Robles, Coihues, Cipreses y Canelos cuyas edades superan los 800 años.
+                  La acción de la precordillera origina cascadas, pozones y vertientes que alimentan las lagunas El Príncipe y La Gracia, parte integral de parque El Buchén.
                   </p>
                 </div>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
@@ -46,7 +45,7 @@ export default function Home() {
                 </div>
               </div>
               <Image
-                src="/images/el-buchen-landscape.jpg"
+                src="/test.jpg"
                 width={600}
                 height={400}
                 alt="Paisaje de El Buchen"
@@ -60,40 +59,31 @@ export default function Home() {
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Nuestros Servicios</h2>
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Videos</h2>
                 <p className="max-w-[900px] text-[#2D6A4F] md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Descubre las experiencias que ofrecemos en El Buchen
+                  Conoce El Buchén a través de nuestros videos
                 </p>
               </div>
             </div>
             <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-3 lg:gap-12">
-              <Card className="border-2 border-[#1B4332]/10">
-                <CardContent className="flex flex-col items-center space-y-4 p-6">
-                  <Mountain className="h-12 w-12 text-[#1B4332]" />
-                  <h3 className="text-xl font-bold">Senderismo</h3>
-                  <p className="text-center text-[#2D6A4F]">
-                    Recorre nuestros senderos y descubre la belleza natural de la región
-                  </p>
-                </CardContent>
-              </Card>
-              <Card className="border-2 border-[#1B4332]/10">
-                <CardContent className="flex flex-col items-center space-y-4 p-6">
-                  <Trees className="h-12 w-12 text-[#1B4332]" />
-                  <h3 className="text-xl font-bold">Conservación</h3>
-                  <p className="text-center text-[#2D6A4F]">
-                    Participa en nuestros proyectos de conservación y educación ambiental
-                  </p>
-                </CardContent>
-              </Card>
-              <Card className="border-2 border-[#1B4332]/10">
-                <CardContent className="flex flex-col items-center space-y-4 p-6">
-                  <Compass className="h-12 w-12 text-[#1B4332]" />
-                  <h3 className="text-xl font-bold">Experiencias</h3>
-                  <p className="text-center text-[#2D6A4F]">
-                    Vive experiencias únicas en contacto con la naturaleza
-                  </p>
-                </CardContent>
-              </Card>
+              <VideoModal
+                videoId="174740038"
+                title="Video Proyecto"
+                description="Conoce nuestra misión y visión para la conservación del bosque nativo"
+                icon={<Video className="h-12 w-12 text-[#1B4332]" />}
+              />
+              <VideoModal
+                videoId="174740038"
+                title="Baño Forestal"
+                description="Experimenta la conexión con la naturaleza a través del baño forestal"
+                icon={<Trees className="h-12 w-12 text-[#1B4332]" />}
+              />
+              <VideoModal
+                videoId="174740038"
+                title="Vista Aérea"
+                description="Descubre la belleza de El Buchén desde el aire"
+                icon={<Bird className="h-12 w-12 text-[#1B4332]" />}
+              />
             </div>
           </div>
         </section>
@@ -118,25 +108,7 @@ export default function Home() {
           </div>
         </section>
       </main>
-
-      <footer className="w-full border-t border-[#1B4332]/20 py-6">
-        <div className="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row md:py-0">
-          <div className="flex items-center gap-4 px-8 md:px-0">
-            <Leaf className="h-6 w-6 text-[#1B4332]" />
-            <p className="text-sm text-[#2D6A4F]">
-              © {new Date().getFullYear()} El Buchen. Todos los derechos reservados.
-            </p>
-          </div>
-          <nav className="flex gap-4 sm:gap-6">
-            <Link className="text-sm font-medium text-[#2D6A4F] hover:text-[#1B4332]" href="/about">
-              Quiénes Somos
-            </Link>
-            <Link className="text-sm font-medium text-[#2D6A4F] hover:text-[#1B4332]" href="/contact">
-              Contacto
-            </Link>
-          </nav>
-        </div>
-      </footer>
+     <Footer />
     </div>
   )
 }

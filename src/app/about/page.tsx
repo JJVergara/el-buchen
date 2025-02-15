@@ -2,6 +2,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { Mountain, Heart, Leaf } from "lucide-react"
+import Footer from "@/components/footer"
 
 export default function AboutPage() {
   return (
@@ -46,7 +47,7 @@ export default function AboutPage() {
               </div>
               <div className="relative aspect-video lg:aspect-square">
                 <Image
-                  src="/images/el-buchen-about.jpg"
+                  src="/test.jpg"
                   alt="El Buchen paisaje"
                   fill
                   className="object-cover rounded-lg"
@@ -56,7 +57,6 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Values Section */}
         <section className="w-full py-12 md:py-24 lg:py-32 bg-[#1B4332]/5">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
@@ -115,6 +115,7 @@ export default function AboutPage() {
           </div>
         </section>
       </main>
+      <Footer />
     </div>
   )
 } 

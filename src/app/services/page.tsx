@@ -4,6 +4,7 @@ import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
 import { services } from "../../../data/services"
 import { Service } from "../../../types/service"
+import Footer from "@/components/footer"
 
 export default function ServicesPage() {
   return (
@@ -69,6 +70,7 @@ export default function ServicesPage() {
           </div>
         </section>
       </main>
+      <Footer />
     </div>
   )
 } 

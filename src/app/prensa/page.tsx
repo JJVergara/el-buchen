@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
 import { Newspaper, ExternalLink } from "lucide-react"
+import Footer from "@/components/footer"
 
 export default function PrensaPage() {
   const pressArticles = [
@@ -11,7 +12,7 @@ export default function PrensaPage() {
       source: "Diario Local",
       date: "15 de Marzo, 2024",
       description: "Reportaje sobre la iniciativa de conservación de El Buchén y su impacto en la región.",
-      image: "/images/press-1.jpg",
+      image: "/test.jpg",
       link: "#"
     },
     {
@@ -19,7 +20,7 @@ export default function PrensaPage() {
       source: "Revista Turismo",
       date: "10 de Febrero, 2024",
       description: "Análisis del modelo de turismo sustentable implementado en El Buchén.",
-      image: "/images/press-2.jpg",
+      image: "/test.jpg",
       link: "#"
     },
     {
@@ -27,7 +28,7 @@ export default function PrensaPage() {
       source: "Portal Ambiental",
       date: "5 de Enero, 2024",
       description: "Entrevista sobre los programas educativos y de conservación desarrollados en El Buchén.",
-      image: "/images/press-3.jpg",
+      image: "/test.jpg",
       link: "#"
     }
   ]
@@ -116,7 +117,7 @@ export default function PrensaPage() {
               </div>
               <div className="relative aspect-video rounded-lg overflow-hidden">
                 <Image
-                  src="/images/press-kit.jpg"
+                  src="/test.jpg"
                   alt="Kit de Prensa El Buchén"
                   fill
                   className="object-cover"
@@ -126,6 +127,7 @@ export default function PrensaPage() {
           </div>
         </section>
       </main>
+      <Footer />
     </div>
   )
 } 

@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
 import { Download, Star, FileText } from "lucide-react"
+import Footer from "@/components/footer"
 
 export default function TestimoniosPage() {
   const testimonials = [
@@ -10,19 +11,19 @@ export default function TestimoniosPage() {
       name: "María González",
       role: "Visitante",
       text: "Una experiencia única en medio de la naturaleza. Los senderos están muy bien mantenidos y la vista desde los miradores es espectacular. El personal es muy amable y conocedor del lugar.",
-      image: "/images/testimonial-1.jpg"
+      image: "/test.jpg"
     },
     {
       name: "Juan Pérez",
       role: "Fotógrafo",
       text: "Como fotógrafo de naturaleza, El Buchén es un paraíso. La diversidad de flora y fauna es impresionante, y las instalaciones facilitan el trabajo fotográfico.",
-      image: "/images/testimonial-2.jpg"
+      image: "/test.jpg"
     },
     {
       name: "Ana Silva",
       role: "Profesora",
       text: "Visitamos El Buchén con un grupo de estudiantes y fue una experiencia educativa invaluable. Los niños aprendieron mucho sobre la importancia de la conservación.",
-      image: "/images/testimonial-3.jpg"
+      image: "/test.jpg"
     }
   ]
 
@@ -152,6 +153,7 @@ export default function TestimoniosPage() {
           </div>
         </section>
       </main>
+      <Footer />
     </div>
   )
 } 

@@ -1,6 +1,7 @@
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import Footer from "@/components/footer"
 
 export default function ProyectoPage() {
   return (
@@ -27,49 +28,35 @@ export default function ProyectoPage() {
                   <h2 className="text-3xl font-bold tracking-tighter">¿Qué es El Buchén?</h2>
                   <div className="text-lg text-[#2D6A4F] space-y-4">
                     <p>
-                      El Buchén es un proyecto de conservación y turismo ubicado en la Región de Los Lagos, Chile. 
-                      Nuestro predio se encuentra en el sector de Lenca, comuna de Puerto Montt, y cuenta con 
-                      aproximadamente 1000 hectáreas de bosque nativo, las cuales están siendo destinadas a la 
-                      conservación.
-                    </p>
-                    <p>
-                      El proyecto nace el año 2020 con la compra del terreno y la idea de proteger este lugar 
-                      único, que cuenta con una gran biodiversidad y belleza escénica. Desde entonces, hemos 
-                      trabajado en la implementación de infraestructura y el desarrollo de actividades que 
-                      permitan a las personas conocer y disfrutar de este espacio natural de manera sustentable.
+                      Parque El Buchén es un proyecto eco-inmobiliario constituído por fundos cuyas superficies fluctúan entre 5 y 9 hectáreas lo que abarca un total de 500 hectáreas, más un parque común de 1.000 hectáreas, es decir 1.500 hectáreas que lo convierten en un escenario ideal para descansar y desarrollar actividades en familia como trekking, cabalgatas, paseos en bicicleta, excursiones y pesca deportiva.
                     </p>
                   </div>
                 </div>
 
                 <div className="space-y-4">
-                  <h2 className="text-3xl font-bold tracking-tighter">Nuestra Misión</h2>
+                  <h2 className="text-3xl font-bold tracking-tighter">El Espíritu de la montaña</h2>
                   <div className="text-lg text-[#2D6A4F] space-y-4">
                     <p>
-                      Buscamos proteger y conservar el bosque nativo y su biodiversidad, promoviendo la 
-                      educación ambiental y el turismo sustentable como herramientas para generar conciencia 
-                      sobre la importancia de la conservación de nuestro patrimonio natural.
-                    </p>
-                    <p>
-                      A través de nuestras actividades, queremos que las personas puedan conectar con la 
-                      naturaleza y entender la importancia de su protección para las futuras generaciones.
+                      El paso desde la ciudad a la montaña nos conduce a una profunda transformación espiritual. Respirar, sentir, entender, conocer y compartir, son algunas de las muchas experiencias para los sentidos, en unión con la tierra y la inmensidad de la naturaleza en su estado más puro e intocable.
                     </p>
                   </div>
                 </div>
 
                 <div className="space-y-4">
-                  <h2 className="text-3xl font-bold tracking-tighter">Características del Lugar</h2>
-                  <div className="text-lg text-[#2D6A4F] space-y-4">
+                  <h2 className="text-3xl font-bold tracking-tighter">Masterplan</h2>
+                  <div className="text-lg text-[#2D6A4F] space-y-2">
                     <p>
-                      El predio cuenta con una gran diversidad de flora y fauna nativa, incluyendo especies 
-                      como el pudú, el monito del monte, el carpintero negro y diversas especies de aves. 
-                      El bosque está compuesto principalmente por especies como coigüe, ulmo, tepa y mañío, 
-                      entre otras.
+                    Superficie Total: 1.500 hectáreas
                     </p>
                     <p>
-                      La topografía del lugar es variada, con sectores de pendiente suave y otros más 
-                      escarpados, lo que permite tener diferentes tipos de senderos y miradores con vistas 
-                      panorámicas hacia el Seno de Reloncaví y los volcanes de la zona.
+                    Parque común protegido: 1.000 hectáreas aprox.
                     </p>
+                    <p>
+                    Campos privados: 500 hectáreas
+                    </p>
+                    <p>
+                    Superficie promedio: 5 a 9 hectáreas
+                    </p>                    
                   </div>
                 </div>
               </div>
@@ -77,7 +64,7 @@ export default function ProyectoPage() {
               <div className="space-y-8">
                 <div className="relative aspect-video rounded-lg overflow-hidden">
                   <Image
-                    src="/images/el-buchen-vista.jpg"
+                    src="/test.jpg"
                     alt="Vista panorámica de El Buchén"
                     fill
                     className="object-cover"
@@ -85,7 +72,7 @@ export default function ProyectoPage() {
                 </div>
                 <div className="relative aspect-video rounded-lg overflow-hidden">
                   <Image
-                    src="/images/el-buchen-bosque.jpg"
+                    src="/test.jpg"
                     alt="Bosque nativo de El Buchén"
                     fill
                     className="object-cover"
@@ -110,7 +97,7 @@ export default function ProyectoPage() {
                   </Button>
                 </Link>
                 <Link href="/galeria">
-                  <Button variant="outline" className="text-white border-white hover:bg-white/10">
+                  <Button variant="outline" className="text-[#1B4332] border-white hover:bg-white/10">
                     Ver Galería
                   </Button>
                 </Link>
@@ -119,6 +106,7 @@ export default function ProyectoPage() {
           </div>
         </section>
       </main>
+      <Footer />
     </div>
   )
 } 
