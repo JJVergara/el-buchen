@@ -10,11 +10,13 @@ export function Navbar() {
   const pathname = usePathname()
 
   const links = [
-    { href: "/", label: "Inicio" },
-    { href: "/about", label: "Quiénes Somos" },
-    { href: "/services", label: "Servicios" },
-    { href: "/gallery", label: "Galería" },
-    { href: "/contact", label: "Contacto" },
+    { href: "/", label: "Home" },
+    { href: "/proyecto", label: "Proyecto" },
+    { href: "/equipamiento", label: "Equipamiento" },
+    { href: "/galeria", label: "Galería" },
+    { href: "/testimonios", label: "Testimonios y Descargas" },
+    { href: "/prensa", label: "Prensa" },
+    { href: "/contacto", label: "Contacto" }
   ]
 
   return (
@@ -22,7 +24,7 @@ export function Navbar() {
       <div className="container flex h-16 items-center">
         <Link href="/" className="flex items-center space-x-2">
           <Leaf className="h-6 w-6 text-white" />
-          <span className="font-bold text-xl text-white">El Buchen</span>
+          <span className="font-bold text-xl text-white">El Buchén</span>
         </Link>
 
         {/* Desktop Navigation */}
