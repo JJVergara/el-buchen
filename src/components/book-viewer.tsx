@@ -8,13 +8,10 @@ import {
   DialogTrigger,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
-import { ChevronLeft, ChevronRight } from "lucide-react"
 import { LoadingSpinner } from "./loading-spinner"
 import "react-pdf/dist/Page/AnnotationLayer.css"
 import "react-pdf/dist/Page/TextLayer.css"
 
-// Configure PDF.js worker
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`
 
 interface BookViewerProps {
@@ -26,18 +23,28 @@ export function BookViewer({ url, trigger }: BookViewerProps) {
   const [numPages, setNumPages] = useState<number>(0)
   const [pageNumber, setPageNumber] = useState(1)
   const [isLoading, setIsLoading] = useState(true)
+  const [slideDirection, setSlideDirection] = useState<'left' | 'right' | null>(null)
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
     setNumPages(numPages)
     setIsLoading(false)
   }
 
-  const nextPage = () => {
-    setPageNumber((prev) => Math.min(prev + 1, numPages))
-  }
-
-  const previousPage = () => {
-    setPageNumber((prev) => Math.max(prev - 1, 1))
+  const handlePageClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect()
+    const x = event.clientX - rect.left
+    
+    if (x < rect.width / 2) {
+      if (pageNumber > 1) {
+        setSlideDirection('left')
+        setPageNumber((prev) => Math.max(prev - 1, 1))
+      }
+    } else {
+      if (pageNumber < numPages) {
+        setSlideDirection('right')
+        setPageNumber((prev) => Math.min(prev + 1, numPages))
+      }
+    }
   }
 
   return (
@@ -48,7 +55,10 @@ export function BookViewer({ url, trigger }: BookViewerProps) {
       <DialogContent className="max-w-4xl h-[90vh] flex flex-col items-center justify-center p-4 bg-white">
         <DialogTitle className="sr-only">Visor de PDF</DialogTitle>
         
-        <div className="relative flex-1 w-full overflow-auto flex flex-col items-center">
+        <div 
+          className="relative flex-1 w-full overflow-hidden flex flex-col items-center cursor-pointer"
+          onClick={handlePageClick}
+        >
           {isLoading && <LoadingSpinner />}
           <Document
             file={url}
@@ -60,37 +70,29 @@ export function BookViewer({ url, trigger }: BookViewerProps) {
               </div>
             }
           >
-            <Page
-              pageNumber={pageNumber}
-              loading={<LoadingSpinner />}
-              renderTextLayer={false}
-              renderAnnotationLayer={false}
-              width={Math.min(window.innerWidth - 100, 800)}
-            />
+            <div 
+              className={`transition-transform duration-300 ease-in-out
+                ${slideDirection === 'left' ? 'translate-x-[-100%] opacity-0' : ''}
+                ${slideDirection === 'right' ? 'translate-x-[100%] opacity-0' : ''}
+              `}
+              onTransitionEnd={() => setSlideDirection(null)}
+            >
+              <Page
+                pageNumber={pageNumber}
+                loading={<LoadingSpinner />}
+                renderTextLayer={false}
+                renderAnnotationLayer={false}
+                width={Math.min(window.innerWidth - 100, 800)}
+              />
+            </div>
           </Document>
         </div>
 
         {numPages > 0 && (
           <div className="flex items-center gap-4 mt-4">
-            <Button
-              variant="outline"
-              onClick={previousPage}
-              disabled={pageNumber <= 1}
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
-            
             <span className="text-sm">
               Página {pageNumber} de {numPages}
             </span>
-
-            <Button
-              variant="outline"
-              onClick={nextPage}
-              disabled={pageNumber >= numPages}
-            >
-              <ChevronRight className="h-4 w-4" />
-            </Button>
           </div>
         )}
       </DialogContent>
