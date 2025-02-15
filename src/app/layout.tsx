@@ -10,8 +10,8 @@ const montserrat = Montserrat({
 })
 
 export const metadata: Metadata = {
-  title: "El Buchen - Turismo y Conservación",
-  description: "El Buchen es un proyecto de turismo y conservación ubicado en la Región de Los Lagos, Chile. Ofrecemos experiencias únicas en la naturaleza mientras protegemos nuestro entorno.",
+  title: "El Buchén - Turismo y Conservación",
+  description: "El Buchén es un proyecto de turismo y conservación ubicado en la Región de Los Lagos, Chile. Ofrecemos experiencias únicas en la naturaleza mientras protegemos nuestro entorno.",
 }
 
 export default function RootLayout({
@@ -23,8 +23,12 @@ export default function RootLayout({
     <html lang="es" className={montserrat.className}>
       <body className="min-h-screen bg-white text-[#1B4332]">
         <Providers>
-          <Navbar />
-          <main>{children}</main>
+          <div className="flex min-h-screen flex-col">
+            <Navbar />
+            <div className="flex-1">
+              {children}
+            </div>
+          </div>
         </Providers>
       </body>
     </html>

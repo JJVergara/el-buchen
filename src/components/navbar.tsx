@@ -21,14 +21,14 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-[#1B4332]/95 backdrop-blur supports-[backdrop-filter]:bg-[#1B4332]/60">
-      <div className="container flex h-16 items-center">
+      <div className="container flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center space-x-2">
           <Leaf className="h-6 w-6 text-white" />
           <span className="font-bold text-xl text-white">El Buchén</span>
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex ml-auto gap-6">
+        <nav className="hidden md:flex items-center space-x-6">
           {links.map((link) => (
             <Link
               key={link.href}
@@ -42,7 +42,8 @@ export function Navbar() {
           ))}
         </nav>
 
-        <div className="flex md:hidden ml-auto">
+        {/* Mobile Navigation */}
+        <div className="flex md:hidden">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" className="text-white hover:text-[#B7E4C7]">
