@@ -81,3 +81,26 @@ export const images: LocalImage[] = [
     ...getRandomDimensions()
   }
 ]; 
+
+// Helper function to check if an image exists
+const validateImage = async (url: string): Promise<boolean> => {
+  try {
+    const response = await fetch(url, { method: 'HEAD' });
+    return response.ok;
+  } catch {
+    return false;
+  }
+}
+
+// Filter out non-existent images
+export const getValidImages = async (): Promise<LocalImage[]> => {
+  const validImages: LocalImage[] = [];
+  
+  for (const image of images) {
+    if (await validateImage(image.url)) {
+      validImages.push(image);
+    }
+  }
+  
+  return validImages;
+} 

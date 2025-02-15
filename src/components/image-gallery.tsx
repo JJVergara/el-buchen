@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { BlurFade } from "@/components/magicui/blur-fade"
 import ImagePopup from "@/components/image-popup"
 import { useInView } from "react-intersection-observer"
-import { images as allImages, LocalImage } from "@/data/images"
+import { getValidImages, LocalImage } from "@/data/images"
 
 const IMAGES_PER_PAGE = 20
 
@@ -12,19 +12,36 @@ export default function ImageGallery() {
   const [images, setImages] = useState<LocalImage[]>([])
   const [selectedImage, setSelectedImage] = useState<LocalImage | null>(null)
   const [page, setPage] = useState(1)
+  const [allValidImages, setAllValidImages] = useState<LocalImage[]>([])
 
   const fetchImages = async (pageNum: number) => {
-    const startIndex = (pageNum - 1) * IMAGES_PER_PAGE
-    const endIndex = startIndex + IMAGES_PER_PAGE
-    const newImages = allImages.slice(startIndex, endIndex)
-    setImages((prev) => [...prev, ...newImages])
+    if (allValidImages.length === 0) {
+      // Initial fetch of all valid images
+      const validImages = await getValidImages()
+      setAllValidImages(validImages)
+      
+      // Set initial page of images
+      const startIndex = (pageNum - 1) * IMAGES_PER_PAGE
+      const endIndex = startIndex + IMAGES_PER_PAGE
+      setImages(validImages.slice(startIndex, endIndex))
+    } else {
+      // Load more images from already validated set
+      const startIndex = (pageNum - 1) * IMAGES_PER_PAGE
+      const endIndex = startIndex + IMAGES_PER_PAGE
+      setImages(prev => [...prev, ...allValidImages.slice(startIndex, endIndex)])
+    }
   }
+
+  // Load initial images
+  useEffect(() => {
+    fetchImages(1)
+  }, [])
 
   // Load more images when scrolling
   const { ref: loadMoreRef } = useInView({
     onChange: (inView) => {
-      if (inView) {
-        setPage((prev) => prev + 1)
+      if (inView && allValidImages.length > images.length) {
+        setPage(prev => prev + 1)
         fetchImages(page + 1)
       }
     },
@@ -46,11 +63,6 @@ export default function ImageGallery() {
       setSelectedImage(images[newIndex])
     }
   }
-
-  // Initial load
-  useEffect(() => {
-    fetchImages(1)
-  }, [])
 
   return (
     <section id="photos" className="p-4">
