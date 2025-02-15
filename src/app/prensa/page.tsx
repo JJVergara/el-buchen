@@ -2,8 +2,9 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
-import { Newspaper, ExternalLink } from "lucide-react"
+import { Newspaper } from "lucide-react"
 import Footer from "@/components/footer"
+import { BookViewer } from "@/components/book-viewer"
 
 export default function PrensaPage() {
   const pressArticles = [
@@ -13,7 +14,7 @@ export default function PrensaPage() {
       date: "15 de Marzo, 2024",
       description: "Reportaje sobre la iniciativa de conservación de El Buchén y su impacto en la región.",
       image: "/test.jpg",
-      link: "#"
+      pdfUrl: "/press/prensa_polo2014.pdf"
     },
     {
       title: "Turismo Sustentable: El Modelo de El Buchén",
@@ -21,7 +22,7 @@ export default function PrensaPage() {
       date: "10 de Febrero, 2024",
       description: "Análisis del modelo de turismo sustentable implementado en El Buchén.",
       image: "/test.jpg",
-      link: "#"
+      pdfUrl: "/press/prensa_polo2014.pdf"
     },
     {
       title: "Conservación y Educación Ambiental en El Buchén",
@@ -29,35 +30,31 @@ export default function PrensaPage() {
       date: "5 de Enero, 2024",
       description: "Entrevista sobre los programas educativos y de conservación desarrollados en El Buchén.",
       image: "/test.jpg",
-      link: "#"
+      pdfUrl: "/press/prensa_polo2014.pdf"
     }
   ]
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex min-h-screen flex-col">
       <main className="flex-1">
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-[#1B4332]">
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-[#1B4332]/5">
           <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center text-white">
-              <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl">
-                Prensa
-              </h1>
-              <p className="max-w-[900px] text-xl/relaxed text-[#B7E4C7]">
-                El Buchén en los medios de comunicación
-              </p>
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <div className="space-y-2">
+                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-[#1B4332]">
+                  Prensa y Publicaciones
+                </h1>
+                <p className="mx-auto max-w-[700px] text-[#2D6A4F] md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                  Explora nuestras apariciones en prensa y publicaciones sobre nuestros esfuerzos de conservación ambiental.
+                </p>
+              </div>
             </div>
           </div>
         </section>
 
-        <section className="w-full py-12 md:py-24 lg:py-32">
+        <section className="w-full py-12 md:py-24">
           <div className="container px-4 md:px-6">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold tracking-tighter">Apariciones en Medios</h2>
-              <p className="mt-4 text-lg text-[#2D6A4F]">
-                Conoce lo que dicen los medios sobre nuestro proyecto
-              </p>
-            </div>
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {pressArticles.map((article, index) => (
                 <Card key={index} className="overflow-hidden border-2 border-[#1B4332]/10">
                   <div className="relative h-48">
@@ -68,22 +65,23 @@ export default function PrensaPage() {
                       className="object-cover"
                     />
                   </div>
-                  <CardContent className="p-6 space-y-4">
-                    <div className="space-y-2">
-                      <div className="flex items-center space-x-2">
-                        <Newspaper className="w-4 h-4 text-[#1B4332]" />
-                        <span className="text-sm text-[#2D6A4F]">{article.source}</span>
-                      </div>
-                      <h3 className="text-xl font-bold">{article.title}</h3>
-                      <p className="text-sm text-[#2D6A4F]">{article.date}</p>
+                  <CardContent className="p-6">
+                    <div className="flex items-center gap-2 text-sm text-[#2D6A4F] mb-2">
+                      <Newspaper className="h-4 w-4" />
+                      <span>{article.source}</span>
+                      <span>•</span>
+                      <span>{article.date}</span>
                     </div>
-                    <p className="text-[#2D6A4F]">{article.description}</p>
-                    <Link href={article.link}>
-                      <Button className="w-full bg-[#1B4332] hover:bg-[#2D6A4F] text-white">
-                        <ExternalLink className="w-4 h-4 mr-2" />
-                        Leer Artículo
-                      </Button>
-                    </Link>
+                    <h3 className="text-xl font-bold text-[#1B4332] mb-2">{article.title}</h3>
+                    <p className="text-[#2D6A4F] mb-4">{article.description}</p>
+                    <BookViewer 
+                      url={article.pdfUrl}
+                      trigger={
+                        <Button className="w-full bg-[#1B4332] hover:bg-[#2D6A4F] text-white">
+                          Leer artículo
+                        </Button>
+                      }
+                    />
                   </CardContent>
                 </Card>
               ))}
