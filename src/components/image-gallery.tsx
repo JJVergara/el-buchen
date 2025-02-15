@@ -1,106 +1,87 @@
 "use client"
-import { useRef, useState } from "react"
-import Image from "next/image"
-import { useInfiniteQuery } from "@tanstack/react-query"
-import { getImages } from "../lib/queries/get-images"
-import { LoadingSpinner } from "@/components/loading-spinner"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { GalleryImage } from "../../types/gallery"
 
-const IMAGES_PER_PAGE = 12
+import { useState, useEffect } from "react"
+import { BlurFade } from "@/components/magicui/blur-fade"
+import ImagePopup from "@/components/image-popup"
+import { useInView } from "react-intersection-observer"
 
-export function ImageGallery() {
-  const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null)
-  const observerTarget = useRef<HTMLDivElement>(null)
+interface Image {
+  id: number
+  url: string
+  width: number
+  height: number
+}
 
-  const {
-    data,
-    hasNextPage,
-    isFetchingNextPage,
-    status,
-  } = useInfiniteQuery({
-    queryKey: ["gallery-images"],
-    queryFn: ({ pageParam = 0 }) => {
-      console.log("Fetching images for page:", pageParam)
-      return getImages(pageParam, IMAGES_PER_PAGE)
-    },
-    getNextPageParam: (lastPage, allPages) => {
-      return lastPage.length === IMAGES_PER_PAGE ? allPages.length : undefined
-    },
-    initialPageParam: 0,
-  })
+export default function ImageGallery() {
+  const [images, setImages] = useState<Image[]>([])
+  const [selectedImage, setSelectedImage] = useState<Image | null>(null)
+  const [page, setPage] = useState(1)
+  const { ref, inView } = useInView()
 
-  const allImages = data?.pages.flat() ?? []
-  const isLoading = status === "pending"
-  const isError = status === "error"
+  const fetchImages = async (pageNum: number) => {
+    // In a real application, you would fetch from an API
+    const newImages = Array.from({ length: 20 }, (_, i) => {
+      const id = (pageNum - 1) * 20 + i + 1
+      const isLandscape = Math.random() > 0.5
+      const width = isLandscape ? 800 : 600
+      const height = isLandscape ? 600 : 800
+      return {
+        id,
+        url: `https://picsum.photos/seed/${id}/${width}/${height}`,
+        width,
+        height,
+      }
+    })
+    setImages((prev) => [...prev, ...newImages])
+  }
 
-  console.log("All pages", data?.pages)
-  console.log("All images", allImages)
-  console.log("Last page", data?.pages[data?.pages.length - 1])
+  useEffect(() => {
+    fetchImages(page)
+  }, [page]) // Removed fetchImages from dependencies
 
-  if (isError) {
-    return (
-      <div className="text-center py-8 text-red-500">
-        Error loading images. Please try again later.
-      </div>
-    )
+  useEffect(() => {
+    if (inView) {
+      setPage((prev) => prev + 1)
+    }
+  }, [inView])
+
+  const handleImageClick = (image: Image) => {
+    setSelectedImage(image)
+  }
+
+  const handleClosePopup = () => {
+    setSelectedImage(null)
+  }
+
+  const handleNavigate = (direction: "prev" | "next") => {
+    if (!selectedImage) return
+    const currentIndex = images.findIndex((img) => img.id === selectedImage.id)
+    const newIndex = direction === "prev" ? currentIndex - 1 : currentIndex + 1
+    if (newIndex >= 0 && newIndex < images.length) {
+      setSelectedImage(images[newIndex])
+    }
   }
 
   return (
-    <>
-      <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4 p-4">
-        {allImages.map((image) => (
-          <div key={image.id} className="break-inside-avoid" onClick={() => setSelectedImage(image)}>
-            <div className="relative group cursor-pointer overflow-hidden rounded-lg">
-              <Image
-                src={image.url || "/placeholder.svg"}
-                alt={image.title}
-                width={image.width}
-                height={image.height}
-                className="w-full h-auto transform transition-transform duration-300 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                <div className="p-4 text-white">
-                  <h3 className="text-lg font-semibold">{image.title}</h3>
-                  <p className="text-sm text-gray-200">{image.description}</p>
-                </div>
-              </div>
-            </div>
-          </div>
+    <section id="photos" className="p-4">
+      <div className="columns-2 gap-4 sm:columns-3 lg:columns-4">
+        {images.map((image, idx) => (
+          <BlurFade key={image.id} delay={0.05 * (idx % 20)} inView>
+            <img
+              className="mb-4 w-full rounded-lg object-cover cursor-pointer"
+              src={image.url || "/placeholder.svg"}
+              alt={`Random stock image ${image.id}`}
+              onClick={() => handleImageClick(image)}
+              style={{
+                aspectRatio: `${image.width} / ${image.height}`,
+              }}
+            />
+          </BlurFade>
         ))}
       </div>
-
-      {(isLoading || isFetchingNextPage) && <LoadingSpinner />}
-
-      {!isLoading && hasNextPage && (
-        <div ref={observerTarget} className="h-10" />
-      )}
-
-      {!hasNextPage && !isLoading && (
-        <div className="text-center py-8 text-muted-foreground">
-          No more images to load
-        </div>
-      )}
-
-      <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
-        {selectedImage && (
-          <DialogContent className="max-w-4xl">
-            <DialogHeader>
-              <DialogTitle>{selectedImage.title}</DialogTitle>
-              <DialogDescription>{selectedImage.description}</DialogDescription>
-            </DialogHeader>
-            <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
-              <Image
-                src={selectedImage.url || "/placeholder.svg"}
-                alt={selectedImage.title}
-                fill
-                className="object-cover"
-              />
-            </div>
-          </DialogContent>
-        )}
-      </Dialog>
-    </>
+      <div ref={ref} className="h-10" /> {/* Intersection observer target */}
+      {selectedImage && <ImagePopup image={selectedImage} onClose={handleClosePopup} onNavigate={handleNavigate} />}
+    </section>
   )
 }
 
