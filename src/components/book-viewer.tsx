@@ -28,14 +28,13 @@ export function BookViewer({ url, trigger }: BookViewerProps) {
 
   useEffect(() => {
     const updateScale = () => {
-      // For mobile (< md breakpoint), use 95% of viewport width
-      // For larger screens, use larger width up to max-w-5xl (1024px)
-      const isMobile = window.innerWidth < 768; // md breakpoint
+  
+      const isMobile = window.innerWidth < 768;
       const maxWidth = isMobile 
-        ? window.innerWidth * 0.95 - 16 // 95% of viewport width on mobile, -16 for padding
-        : Math.min(window.innerWidth * 0.85, 1024) - 32; // 85% up to 1024px on desktop
+        ? window.innerWidth * 0.95 - 16
+        : Math.min(window.innerWidth * 0.85, 1280) - 32;
       
-      const maxHeight = window.innerHeight * 0.75;
+      const maxHeight = window.innerHeight * 0.85;
       setScale({ width: maxWidth, height: maxHeight })
     }
 
@@ -71,7 +70,7 @@ export function BookViewer({ url, trigger }: BookViewerProps) {
       <DialogTrigger asChild>
         {trigger}
       </DialogTrigger>
-      <DialogContent className="w-[95vw] md:max-w-5xl h-[90vh] flex flex-col items-center p-2 pt-8 bg-white dark:bg-gray-900 overflow-y-scroll scrollbar-hide">
+      <DialogContent className="w-[95vw] md:max-w-7xl h-[90vh] flex flex-col items-center p-2 pt-8 bg-white dark:bg-gray-900 overflow-y-scroll scrollbar-hide">
         <DialogTitle className="sr-only">Visor de PDF</DialogTitle>
         
         <div 
