@@ -77,7 +77,10 @@ export default function PrensaPage() {
                     <BookViewer 
                       url={article.pdfUrl}
                       trigger={
-                        <Button className="w-full bg-[#1B4332] hover:bg-[#2D6A4F] text-white">
+                        <Button 
+                          className="w-full bg-[#1B4332] hover:bg-[#2D6A4F] text-white"
+                          aria-label={`Leer artículo: ${article.title}`}
+                        >
                           Leer artículo
                         </Button>
                       }

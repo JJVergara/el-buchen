@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Document, Page, pdfjs } from "react-pdf"
 import {
   Dialog,
@@ -24,6 +24,25 @@ export function BookViewer({ url, trigger }: BookViewerProps) {
   const [pageNumber, setPageNumber] = useState(1)
   const [isLoading, setIsLoading] = useState(true)
   const [slideDirection, setSlideDirection] = useState<'left' | 'right' | null>(null)
+  const [scale, setScale] = useState({ width: 0, height: 0 })
+
+  useEffect(() => {
+    const updateScale = () => {
+      // For mobile (< md breakpoint), use 95% of viewport width
+      // For larger screens, use larger width up to max-w-5xl (1024px)
+      const isMobile = window.innerWidth < 768; // md breakpoint
+      const maxWidth = isMobile 
+        ? window.innerWidth * 0.95 - 16 // 95% of viewport width on mobile, -16 for padding
+        : Math.min(window.innerWidth * 0.85, 1024) - 32; // 85% up to 1024px on desktop
+      
+      const maxHeight = window.innerHeight * 0.75;
+      setScale({ width: maxWidth, height: maxHeight })
+    }
+
+    updateScale()
+    window.addEventListener('resize', updateScale)
+    return () => window.removeEventListener('resize', updateScale)
+  }, [])
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
     setNumPages(numPages)
@@ -52,11 +71,11 @@ export function BookViewer({ url, trigger }: BookViewerProps) {
       <DialogTrigger asChild>
         {trigger}
       </DialogTrigger>
-      <DialogContent className="max-w-4xl h-[90vh] flex flex-col items-center justify-center p-4 bg-white">
+      <DialogContent className="w-[95vw] md:max-w-5xl h-[90vh] flex flex-col items-center p-2 pt-8 bg-white dark:bg-gray-900 overflow-y-scroll scrollbar-hide">
         <DialogTitle className="sr-only">Visor de PDF</DialogTitle>
         
         <div 
-          className="relative flex-1 w-full overflow-hidden flex flex-col items-center cursor-pointer"
+          className="relative w-full flex flex-col items-center cursor-pointer"
           onClick={handlePageClick}
         >
           {isLoading && <LoadingSpinner />}
@@ -82,15 +101,17 @@ export function BookViewer({ url, trigger }: BookViewerProps) {
                 loading={<LoadingSpinner />}
                 renderTextLayer={false}
                 renderAnnotationLayer={false}
-                width={Math.min(window.innerWidth - 100, 800)}
+                width={scale.width}
+                height={scale.height}
+                className="max-w-full h-auto shadow-lg rounded-lg"
               />
             </div>
           </Document>
         </div>
 
         {numPages > 0 && (
-          <div className="flex items-center gap-4 mt-4">
-            <span className="text-sm">
+          <div className="flex items-center gap-4 mt-4 text-foreground">
+            <span className="text-sm font-medium">
               Página {pageNumber} de {numPages}
             </span>
           </div>
