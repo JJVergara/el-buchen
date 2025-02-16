@@ -2,7 +2,6 @@ import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { Mountain, Heart, Leaf } from 'lucide-react'
-import Footer from '@/components/footer'
 
 export default function AboutPage() {
   return (
