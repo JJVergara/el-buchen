@@ -4,6 +4,8 @@ import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
 import { Download, Star, FileText } from "lucide-react"
 import Footer from "@/components/footer"
+import { InterviewList } from "@/components/interview-list"
+import { interviews } from "@/data/interviews"
 
 export default function TestimoniosPage() {
   const testimonials = [
@@ -67,6 +69,18 @@ export default function TestimoniosPage() {
         <section className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold tracking-tighter">Entrevistas Destacadas</h2>
+              <p className="mt-4 text-lg text-[#2D6A4F]">
+                Descubre las historias y experiencias de personas de todo el mundo en El Buchén
+              </p>
+            </div>
+            <InterviewList interviews={interviews} />
+          </div>
+        </section>
+
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-[#1B4332]/5">
+          <div className="container px-4 md:px-6">
+            <div className="text-center mb-12">
               <h2 className="text-3xl font-bold tracking-tighter">Experiencias en El Buchén</h2>
               <p className="mt-4 text-lg text-[#2D6A4F]">
                 Lo que dicen nuestros visitantes sobre su experiencia
@@ -103,7 +117,7 @@ export default function TestimoniosPage() {
           </div>
         </section>
 
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-[#1B4332]/5">
+        <section className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold tracking-tighter">Documentos y Recursos</h2>

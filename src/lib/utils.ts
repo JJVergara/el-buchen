@@ -1,4 +1,4 @@
-import { clsx, type ClassValue } from "clsx"
+import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 
 /**
@@ -39,5 +39,13 @@ export const formatDate = (
     year: "numeric",
     month: "long",
     day: "numeric",
+  })
+}
+
+export function formatDateSpanish(date: string) {
+  return new Date(date).toLocaleDateString('es-ES', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
   })
 }
