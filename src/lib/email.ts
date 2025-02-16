@@ -2,9 +2,8 @@ import { Resend } from 'resend'
 import { ContactFormData } from '@/app/actions/contact'
 import ContactNotificationEmail from '@/emails/contact-notification'
 
-// Validate and type assert environment variables
 const RESEND_API_KEY = process.env.RESEND_API_KEY
-const NOTIFICATION_EMAIL = process.env.NOTIFICATION_EMAIL
+const NOTIFICATION_EMAIL = process.env.NOTIFICATION_EMAIL as string
 
 if (!RESEND_API_KEY) {
   throw new Error('Missing RESEND_API_KEY environment variable')
@@ -35,4 +34,4 @@ export async function sendContactNotification(data: ContactFormData) {
     console.error('Error in sendContactNotification:', error)
     return false
   }
-} 
+}

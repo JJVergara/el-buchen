@@ -1,8 +1,8 @@
-import { LucideIcon } from "lucide-react"
+import { LucideIcon } from 'lucide-react'
 
-export interface Service {
+export type Service = {
   icon: LucideIcon
   title: string
   description: string
   image: string
-} 
+}

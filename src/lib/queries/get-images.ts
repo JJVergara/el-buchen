@@ -1,5 +1,5 @@
-import { supabase } from "@/lib/supabase"
-import { GalleryImage } from "../../../types/gallery"
+import { supabase } from '@/lib/supabase'
+import { GalleryImage } from '../../../dtos/gallery.dto'
 
 export interface CarouselImage {
   src: string
@@ -8,17 +8,18 @@ export interface CarouselImage {
   description: string
 }
 
-export async function getImages(page: number, limit = 12): Promise<GalleryImage[]> {
+export async function getImages(page: number): Promise<GalleryImage[]> {
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
     throw new Error('Supabase environment variables are not configured')
   }
 
   console.log('Supabase URL:', process.env.NEXT_PUBLIC_SUPABASE_URL)
-  console.log('Supabase Anon Key (first 8 chars):', process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY.substring(0, 8))
+  console.log(
+    'Supabase Anon Key (first 8 chars):',
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY.substring(0, 8)
+  )
 
-  const { data: buckets, error: bucketsError } = await supabase
-    .storage
-    .listBuckets()
+  const { data: buckets, error: bucketsError } = await supabase.storage.listBuckets()
 
   if (bucketsError) {
     console.error('Error listing buckets:', bucketsError)
@@ -27,9 +28,7 @@ export async function getImages(page: number, limit = 12): Promise<GalleryImage[
 
   console.log('Available buckets:', buckets)
 
-  const offset = page * limit
-
-  const { data: files, error } = await supabase.storage.from('images').list();
+  const { data: files, error } = await supabase.storage.from('images').list()
 
   if (error) {
     console.error('Error listing files:', error)
@@ -37,13 +36,13 @@ export async function getImages(page: number, limit = 12): Promise<GalleryImage[
   }
 
   console.log('Files found:', files)
-  
+
   if (!files || files.length === 0) {
     console.info(`No images found for page ${page}`)
     return []
   }
 
-  return files.map((file) => {
+  return files.map(file => {
     if (!file.name) {
       throw new Error('File name is missing from Supabase response')
     }

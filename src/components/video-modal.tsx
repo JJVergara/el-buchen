@@ -1,12 +1,8 @@
-"use client"
+'use client'
 
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import { Card, CardContent } from "@/components/ui/card"
-import { Play } from "lucide-react"
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
+import { Card, CardContent } from '@/components/ui/card'
+import { Play } from 'lucide-react'
 
 interface VideoModalProps {
   videoId: string
@@ -19,28 +15,26 @@ export function VideoModal({ videoId, title, description, icon }: VideoModalProp
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Card className="border-2 border-[#1B4332]/10 cursor-pointer hover:border-[#1B4332]/30 transition-colors">
+        <Card className="cursor-pointer border-2 border-[#1B4332]/10 transition-colors hover:border-[#1B4332]/30">
           <CardContent className="flex flex-col items-center space-y-4 p-6">
             <div className="relative">
               {icon}
-              <Play className="h-6 w-6 text-[#1B4332] absolute -bottom-2 -right-2" />
+              <Play className="absolute -bottom-2 -right-2 h-6 w-6 text-[#1B4332]" />
             </div>
             <h3 className="text-xl font-bold">{title}</h3>
-            <p className="text-center text-[#2D6A4F]">
-              {description}
-            </p>
+            <p className="text-center text-[#2D6A4F]">{description}</p>
           </CardContent>
         </Card>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[800px] p-0">
+      <DialogContent className="p-0 sm:max-w-[800px]">
         <div className="aspect-video w-full">
           <iframe
             src={`https://player.vimeo.com/video/${videoId}?h=c97c588f43`}
             allow="autoplay; fullscreen; picture-in-picture"
-            className="w-full h-full"
+            className="h-full w-full"
           />
         </div>
       </DialogContent>
     </Dialog>
   )
-} 
+}

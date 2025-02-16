@@ -1,10 +1,11 @@
-"use client"
+'use client'
 
-import { useState, useEffect } from "react"
-import { BlurFade } from "@/components/magicui/blur-fade"
-import ImagePopup from "@/components/image-popup"
-import { useInView } from "react-intersection-observer"
-import { getValidImages, LocalImage } from "@/data/images"
+import { useState, useEffect } from 'react'
+import { BlurFade } from '@/components/magicui/blur-fade'
+import ImagePopup from '@/components/image-popup'
+import { useInView } from 'react-intersection-observer'
+import { getValidImages } from '../../mock-data/images'
+import { LocalImage } from '../../dtos/image.dto'
 
 const IMAGES_PER_PAGE = 20
 
@@ -16,30 +17,25 @@ export default function ImageGallery() {
 
   const fetchImages = async (pageNum: number) => {
     if (allValidImages.length === 0) {
-      // Initial fetch of all valid images
       const validImages = await getValidImages()
       setAllValidImages(validImages)
-      
-      // Set initial page of images
+
       const startIndex = (pageNum - 1) * IMAGES_PER_PAGE
       const endIndex = startIndex + IMAGES_PER_PAGE
       setImages(validImages.slice(startIndex, endIndex))
     } else {
-      // Load more images from already validated set
       const startIndex = (pageNum - 1) * IMAGES_PER_PAGE
       const endIndex = startIndex + IMAGES_PER_PAGE
       setImages(prev => [...prev, ...allValidImages.slice(startIndex, endIndex)])
     }
   }
 
-  // Load initial images
   useEffect(() => {
     fetchImages(1)
   }, [])
 
-  // Load more images when scrolling
   const { ref: loadMoreRef } = useInView({
-    onChange: (inView) => {
+    onChange: inView => {
       if (inView && allValidImages.length > images.length) {
         setPage(prev => prev + 1)
         fetchImages(page + 1)
@@ -55,10 +51,10 @@ export default function ImageGallery() {
     setSelectedImage(null)
   }
 
-  const handleNavigate = (direction: "prev" | "next") => {
+  const handleNavigate = (direction: 'prev' | 'next') => {
     if (!selectedImage) return
-    const currentIndex = images.findIndex((img) => img.id === selectedImage.id)
-    const newIndex = direction === "prev" ? currentIndex - 1 : currentIndex + 1
+    const currentIndex = images.findIndex(img => img.id === selectedImage.id)
+    const newIndex = direction === 'prev' ? currentIndex - 1 : currentIndex + 1
     if (newIndex >= 0 && newIndex < images.length) {
       setSelectedImage(images[newIndex])
     }
@@ -69,13 +65,16 @@ export default function ImageGallery() {
       <div className="columns-2 gap-4 sm:columns-3 lg:columns-4">
         {images.map((image, idx) => (
           <BlurFade key={image.id} delay={0.05 * (idx % 20)} inView>
-            <div 
+            <div
               className="mb-4 w-full cursor-pointer"
-              style={{ position: 'relative', paddingBottom: `${(image.height / image.width) * 100}%` }}
+              style={{
+                position: 'relative',
+                paddingBottom: `${(image.height / image.width) * 100}%`,
+              }}
               onClick={() => handleImageClick(image)}
             >
               <img
-                className="absolute inset-0 w-full h-full rounded-lg object-cover"
+                className="absolute inset-0 h-full w-full rounded-lg object-cover"
                 src={image.url}
                 alt={`Image ${image.filename}`}
                 loading="lazy"
@@ -85,8 +84,9 @@ export default function ImageGallery() {
         ))}
       </div>
       <div ref={loadMoreRef} className="h-10" />
-      {selectedImage && <ImagePopup image={selectedImage} onClose={handleClosePopup} onNavigate={handleNavigate} />}
+      {selectedImage && (
+        <ImagePopup image={selectedImage} onClose={handleClosePopup} onNavigate={handleNavigate} />
+      )}
     </section>
   )
 }
-

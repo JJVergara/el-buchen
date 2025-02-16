@@ -6,4 +6,3 @@ export type GalleryImage = {
   width: number
   height: number
 }
-

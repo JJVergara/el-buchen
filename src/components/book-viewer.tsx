@@ -1,18 +1,12 @@
-"use client"
+'use client'
 
-import { useState, useEffect, useCallback } from "react"
-import { Document, Page, pdfjs } from "react-pdf"
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-  DialogTitle,
-} from "@/components/ui/dialog"
-import { LoadingSpinner } from "./loading-spinner"
-import "react-pdf/dist/Page/AnnotationLayer.css"
-import "react-pdf/dist/Page/TextLayer.css"
+import { useState, useEffect, useCallback } from 'react'
+import { Document, Page, pdfjs } from 'react-pdf'
+import { Dialog, DialogContent, DialogTrigger, DialogTitle } from '@/components/ui/dialog'
+import { LoadingSpinner } from './loading-spinner'
+import 'react-pdf/dist/Page/AnnotationLayer.css'
+import 'react-pdf/dist/Page/TextLayer.css'
 
-// Use HTTPS CDN URL
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`
 
 interface BookViewerProps {
@@ -35,10 +29,10 @@ export function BookViewer({ url, trigger }: BookViewerProps) {
 
   const updateScale = useCallback(() => {
     const isMobile = window.innerWidth < 768
-    const maxWidth = isMobile 
+    const maxWidth = isMobile
       ? window.innerWidth * 0.95 - 16
       : Math.min(window.innerWidth * 0.85, 1280) - 32
-    
+
     const maxHeight = window.innerHeight * 0.85
     setScale({ width: maxWidth, height: maxHeight })
   }, [])
@@ -57,44 +51,40 @@ export function BookViewer({ url, trigger }: BookViewerProps) {
 
   function onDocumentLoadError(error: Error) {
     setIsLoading(false)
-    setError("Error al cargar el PDF. Por favor, verifique su conexión e intente nuevamente.")
-    console.error("PDF load error:", error)
+    setError('Error al cargar el PDF. Por favor, verifique su conexión e intente nuevamente.')
+    console.error('PDF load error:', error)
   }
 
   const handlePageClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const rect = event.currentTarget.getBoundingClientRect()
     const x = event.clientX - rect.left
-    
+
     if (x < rect.width / 2) {
       if (pageNumber > 1) {
         setSlideDirection('left')
-        setPageNumber((prev) => Math.max(prev - 1, 1))
+        setPageNumber(prev => Math.max(prev - 1, 1))
       }
     } else {
       if (pageNumber < numPages) {
         setSlideDirection('right')
-        setPageNumber((prev) => Math.min(prev + 1, numPages))
+        setPageNumber(prev => Math.min(prev + 1, numPages))
       }
     }
   }
 
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        {trigger}
-      </DialogTrigger>
-      <DialogContent className="w-[95vw] md:max-w-7xl h-[90vh] flex flex-col items-center p-2 pt-8 bg-white dark:bg-gray-900 overflow-y-scroll scrollbar-hide">
+      <DialogTrigger asChild>{trigger}</DialogTrigger>
+      <DialogContent className="scrollbar-hide flex h-[90vh] w-[95vw] flex-col items-center overflow-y-scroll bg-white p-2 pt-8 dark:bg-gray-900 md:max-w-7xl">
         <DialogTitle className="sr-only">Visor de PDF</DialogTitle>
-        
-        <div 
-          className="relative w-full flex flex-col items-center cursor-pointer"
+
+        <div
+          className="relative flex w-full cursor-pointer flex-col items-center"
           onClick={handlePageClick}
         >
           {isLoading && <LoadingSpinner />}
           {error ? (
-            <div className="text-center text-red-500 p-4">
-              {error}
-            </div>
+            <div className="p-4 text-center text-red-500">{error}</div>
           ) : (
             <Document
               file={url}
@@ -102,7 +92,7 @@ export function BookViewer({ url, trigger }: BookViewerProps) {
               onLoadError={onDocumentLoadError}
               loading={<LoadingSpinner />}
             >
-              <div 
+              <div
                 className={`transition-transform duration-300 ease-in-out
                   ${slideDirection === 'left' ? 'translate-x-[-100%] opacity-0' : ''}
                   ${slideDirection === 'right' ? 'translate-x-[100%] opacity-0' : ''}
@@ -116,7 +106,7 @@ export function BookViewer({ url, trigger }: BookViewerProps) {
                   renderAnnotationLayer={false}
                   width={scale.width}
                   height={scale.height}
-                  className="max-w-full h-auto shadow-lg rounded-lg"
+                  className="h-auto max-w-full rounded-lg shadow-lg"
                 />
               </div>
             </Document>
@@ -124,7 +114,7 @@ export function BookViewer({ url, trigger }: BookViewerProps) {
         </div>
 
         {numPages > 0 && (
-          <div className="flex items-center gap-4 mt-4 text-foreground">
+          <div className="mt-4 flex items-center gap-4 text-foreground">
             <span className="text-sm font-medium">
               Página {pageNumber} de {numPages}
             </span>
@@ -133,4 +123,4 @@ export function BookViewer({ url, trigger }: BookViewerProps) {
       </DialogContent>
     </Dialog>
   )
-} 
+}

@@ -1,4 +1,4 @@
-import { supabase } from "../supabase"
+import { supabase } from '../supabase'
 
 export default async function getPdfs() {
   const { data, error } = await supabase.storage.from('pdfs').list()

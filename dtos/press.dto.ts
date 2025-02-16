@@ -1,8 +1,8 @@
-export interface PressArticle {
+export type PressArticle = {
   title: string
   source: string
   date: string
   description: string
   image: string
-  link: string
-} 
+  pdfUrl: string
+}

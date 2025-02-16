@@ -1,21 +1,21 @@
-import { ImageCarousel } from "@/components/image-carousel"
-import { Button } from "@/components/ui/button"
-import { Video, Trees, Bird} from "lucide-react"
-import Link from "next/link"
-import Image from "next/image"
-import { VideoModal } from "@/components/video-modal"
-import Footer from "@/components/footer"
+import { ImageCarousel } from '@/components/image-carousel'
+import { Button } from '@/components/ui/button'
+import { Video, Trees, Bird } from 'lucide-react'
+import Link from 'next/link'
+import Image from 'next/image'
+import { VideoModal } from '@/components/video-modal'
+
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col">
       <main className="flex-1">
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-[#1B4332]">
+        <section className="w-full bg-[#1B4332] py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center text-white">
               <h1 className="text-4xl font-bold tracking-tighter sm:text-6xl md:text-7xl">
                 El Buchen
               </h1>
-              <p className="max-w-[900px] text-xl/relaxed md:text-2xl/relaxed lg:text-3xl/relaxed text-[#B7E4C7]">
+              <p className="max-w-[900px] text-xl/relaxed text-[#B7E4C7] md:text-2xl/relaxed lg:text-3xl/relaxed">
                 Turismo y Conservación en la Región de Los Lagos
               </p>
             </div>
@@ -30,15 +30,21 @@ export default function Home() {
             <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
-                  <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Bienvenidos a El Buchen</h2>
-                  <p className="max-w-[600px] text-[#2D6A4F] text-lg md:text-xl">
-                  En la intimidad precordillera, a 42 kilómetros de Curicó se encuentra el Parque El Buchén. Exclusivos fundos de agrado ubicados en torno a una extensa área de conservación de bosque del tipo valdiviano, en la que es posible apreciar Robles, Coihues, Cipreses y Canelos cuyas edades superan los 800 años.
-                  La acción de la precordillera origina cascadas, pozones y vertientes que alimentan las lagunas El Príncipe y La Gracia, parte integral de parque El Buchén.
+                  <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+                    Bienvenidos a El Buchen
+                  </h2>
+                  <p className="max-w-[600px] text-lg text-[#2D6A4F] md:text-xl">
+                    En la intimidad precordillera, a 42 kilómetros de Curicó se encuentra el Parque
+                    El Buchén. Exclusivos fundos de agrado ubicados en torno a una extensa área de
+                    conservación de bosque del tipo valdiviano, en la que es posible apreciar
+                    Robles, Coihues, Cipreses y Canelos cuyas edades superan los 800 años. La acción
+                    de la precordillera origina cascadas, pozones y vertientes que alimentan las
+                    lagunas El Príncipe y La Gracia, parte integral de parque El Buchén.
                   </p>
                 </div>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
                   <Link href="/about">
-                    <Button className="bg-[#1B4332] hover:bg-[#2D6A4F] text-white">
+                    <Button className="bg-[#1B4332] text-white hover:bg-[#2D6A4F]">
                       Conoce más sobre nosotros
                     </Button>
                   </Link>
@@ -56,7 +62,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-[#1B4332]/5">
+        <section className="w-full bg-[#1B4332]/5 py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
@@ -89,7 +95,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-[#1B4332] text-white">
+        <section className="w-full bg-[#1B4332] py-12 text-white md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
@@ -109,8 +115,6 @@ export default function Home() {
           </div>
         </section>
       </main>
-     <Footer />
     </div>
   )
 }
-

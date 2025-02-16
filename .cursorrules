@@ -5,6 +5,7 @@ You are an expert senior software engineer specializing in modern web developmen
 Before responding to any request, follow these steps:
 
 1. Request Analysis
+
    - Determine task type (code creation, debugging, architecture, etc.)
    - Identify languages and frameworks involved
    - Note explicit and implicit requirements
@@ -12,6 +13,7 @@ Before responding to any request, follow these steps:
    - Consider project context and constraints
 
 2. Solution Planning
+
    - Break down the solution into logical steps
    - Consider modularity and reusability
    - Identify necessary files and dependencies
@@ -28,6 +30,7 @@ Before responding to any request, follow these steps:
 ## Code Style and Structure
 
 ### General Principles
+
 - Write concise, readable TypeScript code
 - Use functional and declarative programming patterns
 - Follow DRY (Don't Repeat Yourself) principle
@@ -35,12 +38,14 @@ Before responding to any request, follow these steps:
 - Structure components logically: exports, subcomponents, helpers, types
 
 ### Naming Conventions
+
 - Use descriptive names with auxiliary verbs (isLoading, hasError)
 - Prefix event handlers with "handle" (handleClick, handleSubmit)
 - Use lowercase with dashes for directories (components/auth-wizard)
 - Favor named exports for components
 
 ### TypeScript Usage
+
 - Use TypeScript for all code
 - Prefer interfaces over types
 - Avoid enums; use const maps instead
@@ -50,6 +55,7 @@ Before responding to any request, follow these steps:
 ## React 19 and Next.js 15 Best Practices
 
 ### Component Architecture
+
 - Favor React Server Components (RSC) where possible
 - Minimize 'use client' directives
 - Implement proper error boundaries
@@ -57,12 +63,14 @@ Before responding to any request, follow these steps:
 - Optimize for performance and Web Vitals
 
 ### State Management
+
 - Use `useActionState` instead of deprecated `useFormState`
 - Leverage enhanced `useFormStatus` with new properties (data, method, action)
 - Implement URL state management with 'nuqs'
 - Minimize client-side state
 
 ### Async Request APIs
+
 ```typescript
 // Always use async versions of runtime APIs
 const cookieStore = await cookies()
@@ -75,12 +83,14 @@ const searchParams = await props.searchParams
 ```
 
 ### Data Fetching
+
 - Fetch requests are no longer cached by default
 - Use `cache: 'force-cache'` for specific cached requests
 - Implement `fetchCache = 'default-cache'` for layout/page-level caching
 - Use appropriate fetching methods (Server Components, SWR, React Query)
 
 ### Route Handlers
+
 ```typescript
 // Cached route handler example
 export const dynamic = 'force-static'
@@ -94,6 +104,7 @@ export async function GET(request: Request) {
 ## Vercel AI SDK Integration
 
 ### Core Concepts
+
 - Use the AI SDK for building AI-powered streaming text and chat UIs
 - Leverage three main packages:
   1. `ai` - Core functionality and streaming utilities
@@ -101,14 +112,15 @@ export async function GET(request: Request) {
   3. React hooks for UI components
 
 ### Route Handler Setup
-```typescript
-import { openai } from '@ai-sdk/openai';
-import { streamText } from 'ai';
 
-export const maxDuration = 30;
+```typescript
+import { openai } from '@ai-sdk/openai'
+import { streamText } from 'ai'
+
+export const maxDuration = 30
 
 export async function POST(req: Request) {
-  const { messages } = await req.json();
+  const { messages } = await req.json()
 
   const result = await streamText({
     model: openai('gpt-4-turbo'),
@@ -116,13 +128,14 @@ export async function POST(req: Request) {
     tools: {
       // Tool definitions
     },
-  });
+  })
 
-  return result.toDataStreamResponse();
+  return result.toDataStreamResponse()
 }
 ```
 
 ### Chat UI Implementation
+
 ```typescript
 'use client';
 
@@ -162,6 +175,7 @@ export default function Chat() {
 ## UI Development
 
 ### Styling
+
 - Use Tailwind CSS with a mobile-first approach
 - Implement Shadcn UI and Radix UI components
 - Follow consistent spacing and layout patterns
@@ -169,6 +183,7 @@ export default function Chat() {
 - Use CSS variables for theme customization
 
 ### Accessibility
+
 - Implement proper ARIA attributes
 - Ensure keyboard navigation
 - Provide appropriate alt text
@@ -176,6 +191,7 @@ export default function Chat() {
 - Test with screen readers
 
 ### Performance
+
 - Optimize images (WebP, sizing, lazy loading)
 - Implement code splitting
 - Use `next/font` for font optimization
@@ -185,6 +201,7 @@ export default function Chat() {
 ## Configuration
 
 ### Next.js Config
+
 ```typescript
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -203,6 +220,7 @@ const nextConfig = {
 ```
 
 ### TypeScript Config
+
 ```json
 {
   "compilerOptions": {
@@ -223,6 +241,7 @@ const nextConfig = {
 ## Testing and Validation
 
 ### Code Quality
+
 - Implement comprehensive error handling
 - Write maintainable, self-documenting code
 - Follow security best practices
@@ -230,6 +249,7 @@ const nextConfig = {
 - Use ESLint and Prettier
 
 ### Testing Strategy
+
 - Plan for unit and integration tests
 - Implement proper test coverage
 - Consider edge cases and error scenarios
@@ -237,6 +257,5 @@ const nextConfig = {
 - Use React Testing Library
 
 Remember: Prioritize clarity and maintainability while delivering robust, accessible, and performant solutions aligned with the latest React 19, Next.js 15, and Vercel AI SDK features and best practices.
-
 
 You also need to remember that we don't use "UseEffects", we use useQuery or useMutation.

@@ -1,4 +1,4 @@
-export interface Interview {
+export type Interview = {
   id: string
   name: string
   role: string
@@ -8,4 +8,4 @@ export interface Interview {
   content: string
   image: string
   date: string
-} 
+}

@@ -1,59 +1,18 @@
-import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
-import { Card, CardContent } from "@/components/ui/card"
-import { Download, Star, FileText } from "lucide-react"
-import Footer from "@/components/footer"
-import { InterviewList } from "@/components/interview-list"
-import { interviews } from "@/data/interviews"
+import Image from 'next/image'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
+import { Card, CardContent } from '@/components/ui/card'
+import { Download, Star } from 'lucide-react'
+import { InterviewList } from '@/components/interview-list'
+import { interviews } from '../../../mock-data/interviews'
+import { testimonials } from '../../../mock-data/testimonials'
+import { downloads } from '../../../mock-data/downloads'
 
 export default function TestimoniosPage() {
-  const testimonials = [
-    {
-      name: "María González",
-      role: "Visitante",
-      text: "Una experiencia única en medio de la naturaleza. Los senderos están muy bien mantenidos y la vista desde los miradores es espectacular. El personal es muy amable y conocedor del lugar.",
-      image: "/test.jpg"
-    },
-    {
-      name: "Juan Pérez",
-      role: "Fotógrafo",
-      text: "Como fotógrafo de naturaleza, El Buchén es un paraíso. La diversidad de flora y fauna es impresionante, y las instalaciones facilitan el trabajo fotográfico.",
-      image: "/test.jpg"
-    },
-    {
-      name: "Ana Silva",
-      role: "Profesora",
-      text: "Visitamos El Buchén con un grupo de estudiantes y fue una experiencia educativa invaluable. Los niños aprendieron mucho sobre la importancia de la conservación.",
-      image: "/test.jpg"
-    }
-  ]
-
-  const downloads = [
-    {
-      title: "Guía de Flora y Fauna",
-      description: "Documento informativo sobre las especies presentes en El Buchén",
-      icon: FileText,
-      link: "/downloads/guia-flora-fauna.pdf"
-    },
-    {
-      title: "Mapa de Senderos",
-      description: "Mapa detallado con los senderos y puntos de interés",
-      icon: FileText,
-      link: "/downloads/mapa-senderos.pdf"
-    },
-    {
-      title: "Reglamento de Visitas",
-      description: "Normas y recomendaciones para visitantes",
-      icon: FileText,
-      link: "/downloads/reglamento.pdf"
-    }
-  ]
-
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex min-h-screen flex-col">
       <main className="flex-1">
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-[#1B4332]">
+        <section className="w-full bg-[#1B4332] py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center text-white">
               <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl">
@@ -68,7 +27,7 @@ export default function TestimoniosPage() {
 
         <section className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
-            <div className="text-center mb-12">
+            <div className="mb-12 text-center">
               <h2 className="text-3xl font-bold tracking-tighter">Entrevistas Destacadas</h2>
               <p className="mt-4 text-lg text-[#2D6A4F]">
                 Descubre las historias y experiencias de personas de todo el mundo en El Buchén
@@ -78,9 +37,9 @@ export default function TestimoniosPage() {
           </div>
         </section>
 
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-[#1B4332]/5">
+        <section className="w-full bg-[#1B4332]/5 py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
-            <div className="text-center mb-12">
+            <div className="mb-12 text-center">
               <h2 className="text-3xl font-bold tracking-tighter">Experiencias en El Buchén</h2>
               <p className="mt-4 text-lg text-[#2D6A4F]">
                 Lo que dicen nuestros visitantes sobre su experiencia
@@ -89,27 +48,27 @@ export default function TestimoniosPage() {
             <div className="grid gap-8 md:grid-cols-3">
               {testimonials.map((testimonial, index) => (
                 <Card key={index} className="border-2 border-[#1B4332]/10">
-                  <CardContent className="p-6 space-y-4">
+                  <CardContent className="space-y-4 p-6">
                     <div className="flex items-center space-x-4">
-                      <div className="relative w-12 h-12 rounded-full overflow-hidden">
+                      <div className="relative h-12 w-12 overflow-hidden rounded-full">
                         <Image
-                          src={testimonial.image}
-                          alt={testimonial.name}
+                          src={testimonial.imageUrl}
+                          alt={testimonial.author}
                           fill
                           className="object-cover"
                         />
                       </div>
                       <div>
-                        <h3 className="font-bold">{testimonial.name}</h3>
+                        <h3 className="font-bold">{testimonial.author}</h3>
                         <p className="text-[#2D6A4F]">{testimonial.role}</p>
                       </div>
                     </div>
                     <div className="flex space-x-1">
                       {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-[#1B4332] text-[#1B4332]" />
+                        <Star key={i} className="h-4 w-4 fill-[#1B4332] text-[#1B4332]" />
                       ))}
                     </div>
-                    <p className="text-[#2D6A4F]">{testimonial.text}</p>
+                    <p className="text-[#2D6A4F]">{testimonial.preview}</p>
                   </CardContent>
                 </Card>
               ))}
@@ -119,7 +78,7 @@ export default function TestimoniosPage() {
 
         <section className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
-            <div className="text-center mb-12">
+            <div className="mb-12 text-center">
               <h2 className="text-3xl font-bold tracking-tighter">Documentos y Recursos</h2>
               <p className="mt-4 text-lg text-[#2D6A4F]">
                 Descarga información útil para tu visita
@@ -128,17 +87,17 @@ export default function TestimoniosPage() {
             <div className="grid gap-8 md:grid-cols-3">
               {downloads.map((download, index) => (
                 <Card key={index} className="border-2 border-[#1B4332]/10">
-                  <CardContent className="p-6 space-y-4">
+                  <CardContent className="space-y-4 p-6">
                     <div className="flex items-center space-x-4">
-                      <download.icon className="w-8 h-8 text-[#1B4332]" />
+                      <download.icon className="h-8 w-8 text-[#1B4332]" />
                       <div>
                         <h3 className="font-bold">{download.title}</h3>
                         <p className="text-[#2D6A4F]">{download.description}</p>
                       </div>
                     </div>
                     <Link href={download.link}>
-                      <Button className="w-full bg-[#1B4332] hover:bg-[#2D6A4F] text-white">
-                        <Download className="w-4 h-4 mr-2" />
+                      <Button className="w-full bg-[#1B4332] text-white hover:bg-[#2D6A4F]">
+                        <Download className="mr-2 h-4 w-4" />
                         Descargar
                       </Button>
                     </Link>
@@ -149,11 +108,13 @@ export default function TestimoniosPage() {
           </div>
         </section>
 
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-[#1B4332] text-white">
+        <section className="w-full bg-[#1B4332] py-12 text-white md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
-              <h2 className="text-3xl font-bold tracking-tighter">¿Quieres Compartir tu Experiencia?</h2>
-              <p className="max-w-[900px] text-[#B7E4C7] text-lg">
+              <h2 className="text-3xl font-bold tracking-tighter">
+                ¿Quieres Compartir tu Experiencia?
+              </h2>
+              <p className="max-w-[900px] text-lg text-[#B7E4C7]">
                 Cuéntanos sobre tu visita a El Buchén y ayuda a otros a conocer este hermoso lugar
               </p>
               <div className="flex flex-col gap-4 min-[400px]:flex-row">
@@ -167,7 +128,6 @@ export default function TestimoniosPage() {
           </div>
         </section>
       </main>
-      <Footer />
     </div>
   )
-} 
+}

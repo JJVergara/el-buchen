@@ -1,13 +1,14 @@
-import { type Interview } from "@/types/interview"
+import { Interview } from "../dtos/interview.dto";
 
 export const interviews: Interview[] = [
   {
-    id: "familia-preece-sole",
-    name: "Matías Preece y Nicole Solé",
-    role: "Propietarios",
-    country: "Chile",
-    title: "Testimonio Familia Preece Solé",
-    summary: "Una familia que también se a unido a nuestra comunidad, es la familia Preece Solé. Matías Preece, Nicole Solé y sus tres niños, han llevado a cabo su sueño de construirse una casa en el bosque respetando el medio ambiente, creando espacios amplios y cómodos para compartir.",
+    id: 'familia-preece-sole',
+    name: 'Matías Preece y Nicole Solé',
+    role: 'Propietarios',
+    country: 'Chile',
+    title: 'Testimonio Familia Preece Solé',
+    summary:
+      'Una familia que también se a unido a nuestra comunidad, es la familia Preece Solé. Matías Preece, Nicole Solé y sus tres niños, han llevado a cabo su sueño de construirse una casa en el bosque respetando el medio ambiente, creando espacios amplios y cómodos para compartir.',
     content: `Una familia que también se a unido a nuestra comunidad, es la familia Preece Solé. Matías Preece, Nicole Solé y sus tres niños, han llevado a cabo su sueño de construirse una casa en el bosque respetando el medio ambiente, creando espacios amplios y cómodos para compartir.
 
 **¿Cómo supieron del Parque El Buchén?**
@@ -55,16 +56,17 @@ Sin duda al sector común, es decir, cocina-living/comedor. Todo es abierto e in
 Es completamente de madera e incluso con la corteza! Por ende, no puede mimetizarse mas con el entorno.
 
 Nos hace muy felices ir al Parque El Buchén !!!`,
-    image: "/interviews/familia-preece-sole.jpg",
-    date: "2024-03-22"
+    image: '/interviews/familia-preece-sole.jpg',
+    date: '2024-03-22',
   },
   {
-    id: "sebastian-diuana",
-    name: "Sebastian Diuana",
-    role: "Visitante",
-    country: "Chile",
-    title: "Sebastian Diuana... estuve en El Buchén",
-    summary: "Difícil es transmitir una vivencia. Éso es ir al Buchén, es vivir una experiencia de paz, de traquilidad maravillosa rodeado por una belleza en la que la naturaleza aporta su magnífica presencia y la mano del hombre, respetuosa, un humilde tributo hecho de la mejor manera... perfecta, diría yo.",
+    id: 'sebastian-diuana',
+    name: 'Sebastian Diuana',
+    role: 'Visitante',
+    country: 'Chile',
+    title: 'Sebastian Diuana... estuve en El Buchén',
+    summary:
+      'Difícil es transmitir una vivencia. Éso es ir al Buchén, es vivir una experiencia de paz, de traquilidad maravillosa rodeado por una belleza en la que la naturaleza aporta su magnífica presencia y la mano del hombre, respetuosa, un humilde tributo hecho de la mejor manera... perfecta, diría yo.',
     content: `**¿Cómo describiría su experiencia en El Buchén?**
 
 Difícil es transmitir una vivencia. Éso es ir al Buchén, es vivir una experiencia de paz, de traquilidad maravillosa rodeado por una belleza en la que la naturaleza aporta su magnífica presencia y la mano del hombre, respetuosa, un humilde tributo hecho de la mejor manera... perfecta, diría yo.
@@ -84,16 +86,17 @@ Soy de ciudad, me gusta Santiago... y más me gusta que esté tan cerca de un lu
 **¿Qué mensaje le gustaría compartir con el equipo de El Buchén?**
 
 Señores del Parque El Buchén, muchas gracias por lo que hicieron y permitirnos pasar días tan llenos de paz y felicidad en sencilla exquisitez y lujo natural.`,
-    image: "/interviews/sebastian-diuana.jpg",
-    date: "2024-03-25"
+    image: '/interviews/sebastian-diuana.jpg',
+    date: '2024-03-25',
   },
   {
-    id: "familia-mora-restrepo",
-    name: "Diego Mora y Ángela Restrepo",
-    role: "Propietarios",
-    country: "Colombia",
-    title: "De Colombia a Parque el Buchén",
-    summary: "Los Mora-Restrepo son una familia muy unida, que gusta de disfrutar de los amigos, la naturaleza y de toda actividad que puedan realizar juntos. Fueron precisamente estas razones las que determinaron la decisión de esta familia proveniente de Colombia, en ser los primeros compradores de un campo privado en el Parque El Buchén.",
+    id: 'familia-mora-restrepo',
+    name: 'Diego Mora y Ángela Restrepo',
+    role: 'Propietarios',
+    country: 'Colombia',
+    title: 'De Colombia a Parque el Buchén',
+    summary:
+      'Los Mora-Restrepo son una familia muy unida, que gusta de disfrutar de los amigos, la naturaleza y de toda actividad que puedan realizar juntos. Fueron precisamente estas razones las que determinaron la decisión de esta familia proveniente de Colombia, en ser los primeros compradores de un campo privado en el Parque El Buchén.',
     content: `Los Mora-Restrepo son una familia muy unida, que gusta de disfrutar de los amigos, la naturaleza y de toda actividad que puedan realizar juntos. Fueron precisamente estas razones las que determinaron la decisión de esta familia proveniente de Colombia, en ser los primeros compradores de un campo privado en el Parque El Buchén.
 
 Diego Mora y su familia, integrada además por su señora, Ángela Restrepo, y sus dos hijos; José María (16) y Antonio (14), llegaron a Chile hace 13 años por asuntos laborales. Actualmente nuestro país es su lugar de residencia, aunque además dividen parte del tiempo entre viajes a su natal Colombia y EE.UU.
@@ -133,7 +136,7 @@ Para construir la mesa utilizaremos un hermoso Coihue caído (muerto) de 1,60 me
 **¿Generalmente los jóvenes de la edad de sus hijos, gustan de lugares cerca de la playa o la nieve ¿Qué les atrajo a ellos del Parque El Buchén?**
 
 Los niños nuestros desde que nacieron están yendo al campo, montando a caballo y les hace mucha falta acá en Chile. Este es el sitio ideal para nosotros y está relativamente cerca de Santiago.`,
-    image: "/interviews/familia-mora-restrepo.jpg",
-    date: "2024-03-20"
-  }
-] 
+    image: '/interviews/familia-mora-restrepo.jpg',
+    date: '2024-03-20',
+  },
+]

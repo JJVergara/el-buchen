@@ -1,5 +1,5 @@
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { type ClassValue, clsx } from 'clsx'
+import { twMerge } from 'tailwind-merge'
 
 /**
  * Merges Tailwind CSS classes with proper precedence
@@ -17,7 +17,7 @@ export const cn = (...inputs: ClassValue[]): string => {
  */
 export function assertValue<T>(
   value: T | null | undefined,
-  message = "Value is required"
+  message = 'Value is required'
 ): asserts value is T {
   if (value === null || value === undefined) {
     throw new Error(message)
@@ -30,15 +30,12 @@ export function assertValue<T>(
  * @param locale - Locale to use for formatting
  * @returns Formatted date string
  */
-export const formatDate = (
-  date: Date | string,
-  locale: string = "en-US"
-): string => {
-  const dateObj = typeof date === "string" ? new Date(date) : date
+export const formatDate = (date: Date | string, locale: string = 'en-US'): string => {
+  const dateObj = typeof date === 'string' ? new Date(date) : date
   return dateObj.toLocaleDateString(locale, {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
   })
 }
 
@@ -46,6 +43,6 @@ export function formatDateSpanish(date: string) {
   return new Date(date).toLocaleDateString('es-ES', {
     year: 'numeric',
     month: 'long',
-    day: 'numeric'
+    day: 'numeric',
   })
 }

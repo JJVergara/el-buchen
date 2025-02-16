@@ -7,4 +7,3 @@ export type Testimony = {
   fullText: string
   date: string
 }
-

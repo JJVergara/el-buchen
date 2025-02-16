@@ -1,7 +1,7 @@
 'use server'
 
-import { supabase } from "@/lib/supabase"
-import { sendContactNotification } from "@/lib/email"
+import { supabase } from '@/lib/supabase'
+import { sendContactNotification } from '@/lib/email'
 
 export type ContactFormData = {
   name: string
@@ -22,7 +22,6 @@ export async function submitContactForm(formData: FormData): Promise<ContactForm
     const phone = formData.get('phone')
     const message = formData.get('message')
 
-    // Type guard for form data
     if (
       typeof name !== 'string' ||
       typeof email !== 'string' ||
@@ -31,7 +30,7 @@ export async function submitContactForm(formData: FormData): Promise<ContactForm
     ) {
       return {
         success: false,
-        message: "Error en el formato de los datos enviados."
+        message: 'Error en el formato de los datos enviados.',
       }
     }
 
@@ -42,44 +41,38 @@ export async function submitContactForm(formData: FormData): Promise<ContactForm
       message,
     }
 
-    // Validate required fields
     if (!data.name || !data.email || !data.message) {
       return {
         success: false,
-        message: "Por favor, complete todos los campos requeridos."
+        message: 'Por favor, complete todos los campos requeridos.',
       }
     }
 
-    // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(data.email)) {
       return {
         success: false,
-        message: "Por favor, ingrese una dirección de correo electrónico válida."
+        message: 'Por favor, ingrese una dirección de correo electrónico válida.',
       }
     }
 
-    // Save to Supabase
-    const { error: dbError } = await supabase
-      .from('contacts')
-      .insert([
-        {
-          name: data.name,
-          email: data.email,
-          phone: data.phone || null,
-          message: data.message,
-        }
-      ])
+    const { error: dbError } = await supabase.from('contacts').insert([
+      {
+        name: data.name,
+        email: data.email,
+        phone: data.phone || null,
+        message: data.message,
+      },
+    ])
 
     if (dbError) {
       console.error('Error saving contact form:', dbError)
       return {
         success: false,
-        message: "Hubo un error al enviar tu mensaje. Por favor, intenta nuevamente."
+        message: 'Hubo un error al enviar tu mensaje. Por favor, intenta nuevamente.',
       }
     }
 
-    // Send email notification
     try {
       const emailSent = await sendContactNotification(data)
       if (!emailSent) {
@@ -87,18 +80,17 @@ export async function submitContactForm(formData: FormData): Promise<ContactForm
       }
     } catch (emailError) {
       console.error('Error sending email notification:', emailError)
-      // We don't return an error here since the contact was saved successfully
     }
 
     return {
       success: true,
-      message: "¡Gracias por tu mensaje! Nos pondremos en contacto contigo pronto."
+      message: '¡Gracias por tu mensaje! Nos pondremos en contacto contigo pronto.',
     }
   } catch (error) {
     console.error('Error in submitContactForm:', error)
     return {
       success: false,
-      message: "Ocurrió un error inesperado. Por favor, intenta nuevamente."
+      message: 'Ocurrió un error inesperado. Por favor, intenta nuevamente.',
     }
   }
 }
