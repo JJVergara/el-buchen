@@ -1,6 +1,4 @@
-import { Leaf } from 'lucide-react'
-import { Facebook } from 'lucide-react'
-import { Instagram } from 'lucide-react'
+import { Leaf, Facebook, Instagram, Phone } from 'lucide-react'
 import Link from 'next/link'
 
 export default function Footer() {
@@ -37,6 +35,15 @@ export default function Footer() {
             aria-label="Instagram"
           >
             <Instagram className="h-5 w-5" />
+          </Link>
+          <Link
+            className="text-[#2D6A4F] hover:text-[#1B4332]"
+            href="https://api.whatsapp.com/send/?phone=56969081153&text&type=phone_number&app_absent=0"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="WhatsApp"
+          >
+            <Phone className="h-5 w-5" />
           </Link>
         </nav>
       </div>

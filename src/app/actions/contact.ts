@@ -2,6 +2,7 @@
 
 import { supabase } from '@/lib/supabase'
 import { sendContactNotification } from '@/lib/email'
+import { sendWhatsAppNotification } from '@/lib/whatsapp'
 
 export type ContactFormData = {
   name: string
@@ -73,13 +74,22 @@ export async function submitContactForm(formData: FormData): Promise<ContactForm
       }
     }
 
-    try {
-      const emailSent = await sendContactNotification(data)
-      if (!emailSent) {
-        console.warn('Email notification failed, but contact was saved')
-      }
-    } catch (emailError) {
-      console.error('Error sending email notification:', emailError)
+    // Send notifications in parallel
+    const [emailSent, whatsappSent] = await Promise.allSettled([
+      sendContactNotification(data),
+      sendWhatsAppNotification(data),
+    ])
+
+    // Log notification failures but don't fail the request
+    if (emailSent.status === 'rejected' || (emailSent.status === 'fulfilled' && !emailSent.value)) {
+      console.warn('Email notification failed, but contact was saved')
+    }
+
+    if (
+      whatsappSent.status === 'rejected' ||
+      (whatsappSent.status === 'fulfilled' && !whatsappSent.value)
+    ) {
+      console.warn('WhatsApp notification failed, but contact was saved')
     }
 
     return {
