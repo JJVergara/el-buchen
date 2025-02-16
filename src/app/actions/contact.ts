@@ -10,13 +10,36 @@ export type ContactFormData = {
   message: string
 }
 
-export async function submitContactForm(formData: FormData) {
+type ContactFormResponse = {
+  success: boolean
+  message: string
+}
+
+export async function submitContactForm(formData: FormData): Promise<ContactFormResponse> {
   try {
+    const name = formData.get('name')
+    const email = formData.get('email')
+    const phone = formData.get('phone')
+    const message = formData.get('message')
+
+    // Type guard for form data
+    if (
+      typeof name !== 'string' ||
+      typeof email !== 'string' ||
+      (phone !== null && typeof phone !== 'string') ||
+      typeof message !== 'string'
+    ) {
+      return {
+        success: false,
+        message: "Error en el formato de los datos enviados."
+      }
+    }
+
     const data: ContactFormData = {
-      name: formData.get('name') as string,
-      email: formData.get('email') as string,
-      phone: formData.get('phone') as string,
-      message: formData.get('message') as string,
+      name,
+      email,
+      phone: phone || '',
+      message,
     }
 
     // Validate required fields
@@ -57,9 +80,14 @@ export async function submitContactForm(formData: FormData) {
     }
 
     // Send email notification
-    const emailSent = await sendContactNotification(data)
-    if (!emailSent) {
-      console.warn('Email notification failed, but contact was saved')
+    try {
+      const emailSent = await sendContactNotification(data)
+      if (!emailSent) {
+        console.warn('Email notification failed, but contact was saved')
+      }
+    } catch (emailError) {
+      console.error('Error sending email notification:', emailError)
+      // We don't return an error here since the contact was saved successfully
     }
 
     return {

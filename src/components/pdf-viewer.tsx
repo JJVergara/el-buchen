@@ -1,28 +1,53 @@
 "use client"
-import { useState } from "react"
+import { useState, useCallback } from "react"
 import { Document, Page, pdfjs } from "react-pdf"
 import { Button } from "@/components/ui/button"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { ChevronLeft, ChevronRight, ZoomIn, ZoomOut } from "lucide-react"
 import { LoadingSpinner } from "./loading-spinner"
 import "react-pdf/dist/Page/AnnotationLayer.css"
 import "react-pdf/dist/Page/TextLayer.css"
 import getPdfs from "@/lib/queries/get-pdfs"
 
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`
+// Use HTTPS CDN URL
+pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`
 
 interface PDFViewerProps {
   url: string
 }
 
+const SCALE_STEP = 0.1
+const MIN_SCALE = 0.5
+const MAX_SCALE = 2.0
+
 export function PDFViewer({ url }: PDFViewerProps) {
   const [numPages, setNumPages] = useState<number>(0)
   const [pageNumber, setPageNumber] = useState<number>(1)
   const [scale, setScale] = useState<number>(1.0)
+  const [error, setError] = useState<string | null>(null)
 
-  function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
+  const onDocumentLoadSuccess = useCallback(({ numPages }: { numPages: number }) => {
     setNumPages(numPages)
-  }
+    setError(null)
+  }, [])
 
+  const onDocumentLoadError = useCallback((error: Error) => {
+    setError("Error loading PDF. Please check your connection and try again.")
+    console.error("PDF load error:", error)
+  }, [])
+
+  const changePage = useCallback((offset: number) => {
+    setPageNumber((prevPageNumber) => {
+      const newPage = prevPageNumber + offset
+      return Math.min(Math.max(1, newPage), numPages)
+    })
+  }, [numPages])
+
+  const adjustScale = useCallback((delta: number) => {
+    setScale((currentScale) => {
+      const newScale = currentScale + delta
+      return Math.min(Math.max(MIN_SCALE, newScale), MAX_SCALE)
+    })
+  }, [])
 
   async function getPdfUrl() {
     const documents = await getPdfs()
@@ -34,13 +59,6 @@ export function PDFViewer({ url }: PDFViewerProps) {
 
   const pdfUrl = getPdfUrl()
   console.log("El pdf url es: ", pdfUrl)
-
-  function changePage(offset: number) {
-    setPageNumber((prevPageNumber) => {
-      const newPage = prevPageNumber + offset
-      return Math.min(Math.max(1, newPage), numPages)
-    })
-  }
 
   return (
     <div className="flex flex-col items-center">
@@ -78,32 +96,50 @@ export function PDFViewer({ url }: PDFViewerProps) {
               transform: `perspective(1000px) rotateY(${pageNumber % 2 === 0 ? "1deg" : "-1deg"})`,
             }}
           >
-            <Document
-              file={url}
-              onLoadSuccess={onDocumentLoadSuccess}
-              loading={<LoadingSpinner />}
-              error={<div className="text-center text-red-500">Error loading PDF. Please try again.</div>}
-            >
-              <Page
-                pageNumber={pageNumber}
-                scale={scale}
+            {error ? (
+              <div className="text-center text-red-500 p-4">
+                {error}
+              </div>
+            ) : (
+              <Document
+                file={url}
+                onLoadSuccess={onDocumentLoadSuccess}
+                onLoadError={onDocumentLoadError}
                 loading={<LoadingSpinner />}
-                className="page"
-                renderTextLayer={true}
-                renderAnnotationLayer={true}
-              />
-            </Document>
+              >
+                <Page
+                  pageNumber={pageNumber}
+                  scale={scale}
+                  loading={<LoadingSpinner />}
+                  className="page"
+                  renderTextLayer={true}
+                  renderAnnotationLayer={true}
+                />
+              </Document>
+            )}
           </div>
         </div>
 
         <div className="flex justify-center mt-4">
           <div className="inline-flex items-center rounded-lg border border-input bg-background p-1 shadow-sm">
-            <Button variant="ghost" size="sm" onClick={() => setScale((s) => Math.max(0.5, s - 0.1))} className="h-8">
-              Zoom Out
+            <Button 
+              variant="ghost" 
+              size="icon"
+              onClick={() => adjustScale(-SCALE_STEP)} 
+              disabled={scale <= MIN_SCALE}
+              className="h-8 w-8"
+            >
+              <ZoomOut className="h-4 w-4" />
             </Button>
             <span className="px-4 text-sm">{Math.round(scale * 100)}%</span>
-            <Button variant="ghost" size="sm" onClick={() => setScale((s) => Math.min(2, s + 0.1))} className="h-8">
-              Zoom In
+            <Button 
+              variant="ghost" 
+              size="icon"
+              onClick={() => adjustScale(SCALE_STEP)} 
+              disabled={scale >= MAX_SCALE}
+              className="h-8 w-8"
+            >
+              <ZoomIn className="h-4 w-4" />
             </Button>
           </div>
         </div>

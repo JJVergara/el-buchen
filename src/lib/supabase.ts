@@ -1,5 +1,14 @@
 import { createClient } from '@supabase/supabase-js';
-const supabaseUrl = 'https://tergmtkpeyhdhhwnpdsz.supabase.co';
-const supabaseKey =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRlcmdtdGtwZXloZGhod25wZHN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzczMzY5NzIsImV4cCI6MjA1MjkxMjk3Mn0.zZA4MwHXPlJCslQHfBUq9uk3vOd2_bXRCE1YciorNGY';
-export const supabase = createClient(supabaseUrl, supabaseKey);
+
+if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
+  throw new Error('Missing NEXT_PUBLIC_SUPABASE_URL environment variable')
+}
+
+if (!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+  throw new Error('Missing NEXT_PUBLIC_SUPABASE_ANON_KEY environment variable')
+}
+
+export const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+);

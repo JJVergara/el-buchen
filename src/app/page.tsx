@@ -45,11 +45,12 @@ export default function Home() {
                 </div>
               </div>
               <Image
-                src="/test.jpg"
+                src="/images/DSC_1453.JPG"
                 width={600}
                 height={400}
                 alt="Paisaje de El Buchen"
                 className="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last"
+                priority
               />
             </div>
           </div>
@@ -67,19 +68,19 @@ export default function Home() {
             </div>
             <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-3 lg:gap-12">
               <VideoModal
-                videoId="174740038"
+                videoId="897654321"
                 title="Video Proyecto"
                 description="Conoce nuestra misión y visión para la conservación del bosque nativo"
                 icon={<Video className="h-12 w-12 text-[#1B4332]" />}
               />
               <VideoModal
-                videoId="174740038"
+                videoId="897654322"
                 title="Baño Forestal"
                 description="Experimenta la conexión con la naturaleza a través del baño forestal"
                 icon={<Trees className="h-12 w-12 text-[#1B4332]" />}
               />
               <VideoModal
-                videoId="174740038"
+                videoId="897654323"
                 title="Vista Aérea"
                 description="Descubre la belleza de El Buchén desde el aire"
                 icon={<Bird className="h-12 w-12 text-[#1B4332]" />}

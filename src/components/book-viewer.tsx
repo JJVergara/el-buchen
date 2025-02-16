@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { Document, Page, pdfjs } from "react-pdf"
 import {
   Dialog,
@@ -12,6 +12,7 @@ import { LoadingSpinner } from "./loading-spinner"
 import "react-pdf/dist/Page/AnnotationLayer.css"
 import "react-pdf/dist/Page/TextLayer.css"
 
+// Use HTTPS CDN URL
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`
 
 interface BookViewerProps {
@@ -19,33 +20,45 @@ interface BookViewerProps {
   trigger: React.ReactNode
 }
 
+interface Scale {
+  width: number
+  height: number
+}
+
 export function BookViewer({ url, trigger }: BookViewerProps) {
   const [numPages, setNumPages] = useState<number>(0)
   const [pageNumber, setPageNumber] = useState(1)
   const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const [slideDirection, setSlideDirection] = useState<'left' | 'right' | null>(null)
-  const [scale, setScale] = useState({ width: 0, height: 0 })
+  const [scale, setScale] = useState<Scale>({ width: 0, height: 0 })
+
+  const updateScale = useCallback(() => {
+    const isMobile = window.innerWidth < 768
+    const maxWidth = isMobile 
+      ? window.innerWidth * 0.95 - 16
+      : Math.min(window.innerWidth * 0.85, 1280) - 32
+    
+    const maxHeight = window.innerHeight * 0.85
+    setScale({ width: maxWidth, height: maxHeight })
+  }, [])
 
   useEffect(() => {
-    const updateScale = () => {
-  
-      const isMobile = window.innerWidth < 768;
-      const maxWidth = isMobile 
-        ? window.innerWidth * 0.95 - 16
-        : Math.min(window.innerWidth * 0.85, 1280) - 32;
-      
-      const maxHeight = window.innerHeight * 0.85;
-      setScale({ width: maxWidth, height: maxHeight })
-    }
-
     updateScale()
     window.addEventListener('resize', updateScale)
     return () => window.removeEventListener('resize', updateScale)
-  }, [])
+  }, [updateScale])
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
     setNumPages(numPages)
     setIsLoading(false)
+    setError(null)
+  }
+
+  function onDocumentLoadError(error: Error) {
+    setIsLoading(false)
+    setError("Error al cargar el PDF. Por favor, verifique su conexión e intente nuevamente.")
+    console.error("PDF load error:", error)
   }
 
   const handlePageClick = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -78,34 +91,36 @@ export function BookViewer({ url, trigger }: BookViewerProps) {
           onClick={handlePageClick}
         >
           {isLoading && <LoadingSpinner />}
-          <Document
-            file={url}
-            onLoadSuccess={onDocumentLoadSuccess}
-            loading={<LoadingSpinner />}
-            error={
-              <div className="text-center text-red-500 p-4">
-                Error al cargar el PDF. Por favor, intente nuevamente.
-              </div>
-            }
-          >
-            <div 
-              className={`transition-transform duration-300 ease-in-out
-                ${slideDirection === 'left' ? 'translate-x-[-100%] opacity-0' : ''}
-                ${slideDirection === 'right' ? 'translate-x-[100%] opacity-0' : ''}
-              `}
-              onTransitionEnd={() => setSlideDirection(null)}
-            >
-              <Page
-                pageNumber={pageNumber}
-                loading={<LoadingSpinner />}
-                renderTextLayer={false}
-                renderAnnotationLayer={false}
-                width={scale.width}
-                height={scale.height}
-                className="max-w-full h-auto shadow-lg rounded-lg"
-              />
+          {error ? (
+            <div className="text-center text-red-500 p-4">
+              {error}
             </div>
-          </Document>
+          ) : (
+            <Document
+              file={url}
+              onLoadSuccess={onDocumentLoadSuccess}
+              onLoadError={onDocumentLoadError}
+              loading={<LoadingSpinner />}
+            >
+              <div 
+                className={`transition-transform duration-300 ease-in-out
+                  ${slideDirection === 'left' ? 'translate-x-[-100%] opacity-0' : ''}
+                  ${slideDirection === 'right' ? 'translate-x-[100%] opacity-0' : ''}
+                `}
+                onTransitionEnd={() => setSlideDirection(null)}
+              >
+                <Page
+                  pageNumber={pageNumber}
+                  loading={<LoadingSpinner />}
+                  renderTextLayer={false}
+                  renderAnnotationLayer={false}
+                  width={scale.width}
+                  height={scale.height}
+                  className="max-w-full h-auto shadow-lg rounded-lg"
+                />
+              </div>
+            </Document>
+          )}
         </div>
 
         {numPages > 0 && (
