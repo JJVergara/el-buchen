@@ -1,72 +1,34 @@
 import { LocalImage } from '../dtos/image.dto'
 
 const getRandomDimensions = () => {
-  const isLandscape = Math.random() > 0.5
-  return isLandscape ? { width: 800, height: 600 } : { width: 600, height: 800 }
+  const random = Math.random()
+
+  // Four different aspect ratios:
+  // 1. Landscape (4:3) - 800x600
+  // 2. Portrait (3:4) - 600x800
+  // 3. Wide landscape (16:9) - 960x540
+  // 4. Square (1:1) - 700x700
+
+  if (random < 0.25) {
+    return { width: 800, height: 600 } // Standard landscape
+  } else if (random < 0.5) {
+    return { width: 600, height: 800 } // Portrait
+  } else if (random < 0.75) {
+    return { width: 960, height: 540 } // Wide landscape
+  } else {
+    return { width: 700, height: 700 } // Square
+  }
 }
 
-export const images: LocalImage[] = [
-  ...Array.from({ length: 89 }, (_, i) => {
-    const dimensions = getRandomDimensions()
-    return {
-      id: i + 1,
-      filename: `DSC_${1213 + i}.JPG`,
-      url: `/images/DSC_${1213 + i}.JPG`,
-      ...dimensions,
-    }
-  }),
-  ...Array.from({ length: 10 }, (_, i) => {
-    const dimensions = getRandomDimensions()
-    return {
-      id: 90 + i,
-      filename: `SSL22${120 + i * 10}.JPG`,
-      url: `/images/SSL22${120 + i * 10}.JPG`,
-      ...dimensions,
-    }
-  }),
-  ...Array.from({ length: 6 }, (_, i) => {
-    const dimensions = getRandomDimensions()
-    return {
-      id: 100 + i,
-      filename: `fotoscv ${String(3 + i * 10).padStart(3, '0')}.jpg`,
-      url: `/images/fotoscv ${String(3 + i * 10).padStart(3, '0')}.jpg`,
-      ...dimensions,
-    }
-  }),
-  ...Array.from({ length: 5 }, (_, i) => {
-    const dimensions = getRandomDimensions()
-    return {
-      id: 110 + i,
-      filename: `Salto  Los Maquis ${String(3 + i * 5).padStart(3, '0')}.jpg`,
-      url: `/images/Salto  Los Maquis ${String(3 + i * 5).padStart(3, '0')}.jpg`,
-      ...dimensions,
-    }
-  }),
-  {
-    id: 120,
-    filename: 'Invierno nevado.jpg',
-    url: '/images/Invierno nevado.jpg',
-    ...getRandomDimensions(),
-  },
-  {
-    id: 121,
-    filename: 'IMG_5317.jpg',
-    url: '/images/IMG_5317.jpg',
-    ...getRandomDimensions(),
-  },
-  {
-    id: 122,
-    filename: 'IMG_5305.jpg',
-    url: '/images/IMG_5305.jpg',
-    ...getRandomDimensions(),
-  },
-  {
-    id: 123,
-    filename: 'Perforación Carpintero.JPG',
-    url: '/images/Perforación Carpintero.JPG',
-    ...getRandomDimensions(),
-  },
-]
+export const images: LocalImage[] = Array.from({ length: 650 }, (_, i) => {
+  const dimensions = getRandomDimensions()
+  return {
+    id: i + 1,
+    filename: `${i + 1}.jpg`,
+    url: `/images/${i + 1}.jpg`,
+    ...dimensions,
+  }
+})
 
 // Helper function to check if an image exists
 const validateImage = async (url: string): Promise<boolean> => {

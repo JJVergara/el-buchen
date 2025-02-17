@@ -70,7 +70,7 @@ export function ImageCarousel() {
           <p className="text-sm">{error.message}</p>
         </div>
       )}
-      <Carousel className="relative">
+      <Carousel className="relative" opts={{ loop: true }}>
         <CarouselContent>
           {images.map((image, index) => (
             <CarouselItem key={`${image.src}-${index}`}>

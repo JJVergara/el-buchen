@@ -1,7 +1,6 @@
 import Image from 'next/image'
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
 import { Mountain, Heart, Leaf } from 'lucide-react'
+import ContactSection from '@/components/contact-section'
 
 export default function AboutPage() {
   return (
@@ -42,7 +41,7 @@ export default function AboutPage() {
               </div>
               <div className="relative aspect-video lg:aspect-square">
                 <Image
-                  src="/test.jpg"
+                  src="/images/7.jpg"
                   alt="El Buchen paisaje"
                   fill
                   className="rounded-lg object-cover"
@@ -52,7 +51,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="w-full bg-[#1B4332]/5 py-12 md:py-24 lg:py-32">
+        <section className="w-full bg-[#1B4332]/5 py-6 md:py-12 lg:py-16">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <h2 className="text-3xl font-bold tracking-tighter">Nuestros Valores</h2>
@@ -85,30 +84,7 @@ export default function AboutPage() {
             </div>
           </div>
         </section>
-
-        <section className="w-full bg-[#1B4332] py-12 text-white md:py-24 lg:py-32">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
-              <h2 className="text-3xl font-bold tracking-tighter">Sé Parte de Nuestra Historia</h2>
-              <p className="max-w-[900px] text-lg text-[#B7E4C7]">
-                Únete a nosotros en nuestra misión de conservación y descubre la belleza natural de
-                la Región de Los Lagos
-              </p>
-              <div className="flex flex-col gap-4 min-[400px]:flex-row">
-                <Link href="/contact">
-                  <Button className="bg-white text-[#1B4332] hover:bg-[#B7E4C7]">
-                    Contáctanos
-                  </Button>
-                </Link>
-                <Link href="/services">
-                  <Button variant="outline" className="border-white text-white hover:bg-white/10">
-                    Conoce Nuestros Servicios
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
+        <ContactSection />
       </main>
     </div>
   )

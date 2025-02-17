@@ -4,6 +4,7 @@ import { Video, Trees, Bird } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { VideoModal } from '@/components/video-modal'
+import ContactSection from '@/components/contact-section'
 
 export default function Home() {
   return (
@@ -51,7 +52,7 @@ export default function Home() {
                 </div>
               </div>
               <Image
-                src="/images/DSC_1453.JPG"
+                src="/images/7.JPG"
                 width={600}
                 height={400}
                 alt="Paisaje de El Buchen"
@@ -95,25 +96,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="w-full bg-[#1B4332] py-12 text-white md:py-24 lg:py-32">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
-              <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Visítanos</h2>
-                <p className="max-w-[900px] text-[#B7E4C7] md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Ven a conocer El Buchen y sé parte de nuestra misión de conservación
-                </p>
-              </div>
-              <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                <Link href="/contact">
-                  <Button className="bg-white text-[#1B4332] hover:bg-[#B7E4C7]">
-                    Contáctanos
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
+        <ContactSection />
       </main>
     </div>
   )

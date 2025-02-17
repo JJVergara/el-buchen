@@ -136,7 +136,7 @@ export default function EquipamientoPage() {
               </div>
               <div className="relative aspect-video overflow-hidden rounded-lg">
                 <Image
-                  src="/test.jpg"
+                  src="/6.jpg"
                   alt="Instalaciones de El Buchén"
                   fill
                   className="object-cover"

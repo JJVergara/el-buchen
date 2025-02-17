@@ -20,13 +20,14 @@ export default function ImageGallery() {
       const validImages = await getValidImages()
       setAllValidImages(validImages)
 
-      const startIndex = (pageNum - 1) * IMAGES_PER_PAGE
-      const endIndex = startIndex + IMAGES_PER_PAGE
+      const startIndex = 0
+      const endIndex = IMAGES_PER_PAGE
       setImages(validImages.slice(startIndex, endIndex))
     } else {
       const startIndex = (pageNum - 1) * IMAGES_PER_PAGE
       const endIndex = startIndex + IMAGES_PER_PAGE
-      setImages(prev => [...prev, ...allValidImages.slice(startIndex, endIndex)])
+
+      setImages(allValidImages.slice(0, endIndex))
     }
   }
 
@@ -60,28 +61,123 @@ export default function ImageGallery() {
     }
   }
 
+  // Helper function to distribute images into columns
+  const distributeColumns = (imageList: LocalImage[]) => {
+    const columns = {
+      col1: [] as LocalImage[],
+      col2: [] as LocalImage[],
+      col3: [] as LocalImage[],
+      col4: [] as LocalImage[],
+    }
+
+    imageList.forEach((image, index) => {
+      const colIndex = index % 4
+      switch (colIndex) {
+        case 0:
+          columns.col1.push(image)
+          break
+        case 1:
+          columns.col2.push(image)
+          break
+        case 2:
+          columns.col3.push(image)
+          break
+        case 3:
+          columns.col4.push(image)
+          break
+      }
+    })
+
+    return columns
+  }
+
   return (
     <section id="photos" className="p-4">
-      <div className="columns-2 gap-4 sm:columns-3 lg:columns-4">
-        {images.map((image, idx) => (
-          <BlurFade key={image.id} delay={0.05 * (idx % 20)} inView>
-            <div
-              className="mb-4 w-full cursor-pointer"
-              style={{
-                position: 'relative',
-                paddingBottom: `${(image.height / image.width) * 100}%`,
-              }}
-              onClick={() => handleImageClick(image)}
-            >
-              <img
-                className="absolute inset-0 h-full w-full rounded-lg object-cover"
-                src={image.url}
-                alt={`Image ${image.filename}`}
-                loading="lazy"
-              />
-            </div>
-          </BlurFade>
-        ))}
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+        <div className="flex flex-col gap-4">
+          {distributeColumns(images).col1.map((image, idx) => (
+            <BlurFade key={image.id} delay={0.05 * idx} inView>
+              <div
+                className="w-full cursor-pointer"
+                style={{
+                  position: 'relative',
+                  paddingBottom: `${(image.height / image.width) * 100}%`,
+                }}
+                onClick={() => handleImageClick(image)}
+              >
+                <img
+                  className="absolute inset-0 h-full w-full rounded-lg object-cover"
+                  src={image.url}
+                  alt={`Image ${image.filename}`}
+                  loading="lazy"
+                />
+              </div>
+            </BlurFade>
+          ))}
+        </div>
+        <div className="flex flex-col gap-4">
+          {distributeColumns(images).col2.map((image, idx) => (
+            <BlurFade key={image.id} delay={0.05 * idx} inView>
+              <div
+                className="w-full cursor-pointer"
+                style={{
+                  position: 'relative',
+                  paddingBottom: `${(image.height / image.width) * 100}%`,
+                }}
+                onClick={() => handleImageClick(image)}
+              >
+                <img
+                  className="absolute inset-0 h-full w-full rounded-lg object-cover"
+                  src={image.url}
+                  alt={`Image ${image.filename}`}
+                  loading="lazy"
+                />
+              </div>
+            </BlurFade>
+          ))}
+        </div>
+        <div className="hidden flex-col gap-4 sm:flex">
+          {distributeColumns(images).col3.map((image, idx) => (
+            <BlurFade key={image.id} delay={0.05 * idx} inView>
+              <div
+                className="w-full cursor-pointer"
+                style={{
+                  position: 'relative',
+                  paddingBottom: `${(image.height / image.width) * 100}%`,
+                }}
+                onClick={() => handleImageClick(image)}
+              >
+                <img
+                  className="absolute inset-0 h-full w-full rounded-lg object-cover"
+                  src={image.url}
+                  alt={`Image ${image.filename}`}
+                  loading="lazy"
+                />
+              </div>
+            </BlurFade>
+          ))}
+        </div>
+        <div className="hidden flex-col gap-4 lg:flex">
+          {distributeColumns(images).col4.map((image, idx) => (
+            <BlurFade key={image.id} delay={0.05 * idx} inView>
+              <div
+                className="w-full cursor-pointer"
+                style={{
+                  position: 'relative',
+                  paddingBottom: `${(image.height / image.width) * 100}%`,
+                }}
+                onClick={() => handleImageClick(image)}
+              >
+                <img
+                  className="absolute inset-0 h-full w-full rounded-lg object-cover"
+                  src={image.url}
+                  alt={`Image ${image.filename}`}
+                  loading="lazy"
+                />
+              </div>
+            </BlurFade>
+          ))}
+        </div>
       </div>
       <div ref={loadMoreRef} className="h-10" />
       {selectedImage && (

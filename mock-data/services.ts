@@ -7,41 +7,41 @@ export const services: Service[] = [
     title: 'Senderismo',
     description:
       'Explora nuestros senderos naturales guiados por expertos locales. Descubre la flora y fauna única de la región mientras aprendes sobre la importancia de su conservación.',
-    image: '/test.JPG',
+    image: '/1.JPG',
   },
   {
     icon: Camera,
     title: 'Fotografía',
     description:
       'Captura la belleza natural de El Buchen con nuestros tours fotográficos. Perfectos tanto para principiantes como para fotógrafos experimentados.',
-    image: '/test.JPG',
+    image: '/2.JPG',
   },
   {
     icon: Trees,
     title: 'Conservación',
     description:
       'Participa en nuestros proyectos de conservación y aprende sobre la importancia de proteger nuestros ecosistemas naturales.',
-    image: '/test.JPG',
+    image: '/3.JPG',
   },
   {
     icon: Book,
     title: 'Educación Ambiental',
     description:
       'Programas educativos diseñados para todas las edades, enfocados en la conservación y el conocimiento de nuestro entorno natural.',
-    image: '/test.JPG',
+    image: '/4.JPG',
   },
   {
     icon: Users,
     title: 'Visitas Grupales',
     description:
       'Experiencias personalizadas para grupos, ideales para escuelas, empresas y organizaciones interesadas en el turismo sustentable.',
-    image: '/test.JPG',
+    image: '/5.JPG',
   },
   {
     icon: Compass,
     title: 'Experiencias Especiales',
     description:
       'Actividades únicas que combinan aventura, aprendizaje y conexión con la naturaleza en un entorno incomparable.',
-    image: '/test.JPG',
+    image: '/6.JPG',
   },
 ]

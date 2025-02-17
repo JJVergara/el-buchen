@@ -1,23 +1,23 @@
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
-import Link from 'next/link'
 import { Card, CardContent } from '@/components/ui/card'
 import { Newspaper } from 'lucide-react'
 import { BookViewer } from '@/components/book-viewer'
 import { pressArticles } from '../../../mock-data/press'
+import ContactSection from '@/components/contact-section'
 
 export default function PrensaPage() {
   return (
     <div className="flex min-h-screen flex-col">
       <main className="flex-1">
-        <section className="w-full bg-[#1B4332]/5 py-12 md:py-24 lg:py-32">
+        <section className="w-full bg-[#1B4332] py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <h1 className="text-3xl font-bold tracking-tighter text-[#1B4332] sm:text-4xl md:text-5xl">
+                <h1 className="text-3xl font-bold tracking-tighter text-white sm:text-4xl md:text-5xl">
                   Prensa y Publicaciones
                 </h1>
-                <p className="mx-auto max-w-[700px] text-[#2D6A4F] md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                <p className="max-w-[900px] text-xl/relaxed text-[#B7E4C7]">
                   Explora nuestras apariciones en prensa y publicaciones sobre nuestros esfuerzos de
                   conservación ambiental.
                 </p>
@@ -60,43 +60,7 @@ export default function PrensaPage() {
             </div>
           </div>
         </section>
-
-        <section className="w-full bg-[#1B4332]/5 py-12 md:py-24 lg:py-32">
-          <div className="container px-4 md:px-6">
-            <div className="grid gap-12 lg:grid-cols-2">
-              <div className="space-y-6">
-                <h2 className="text-3xl font-bold tracking-tighter">Kit de Prensa</h2>
-                <div className="space-y-4 text-lg text-[#2D6A4F]">
-                  <p>
-                    Si eres periodista o medio de comunicación y estás interesado en cubrir El
-                    Buchén, ponemos a tu disposición nuestro kit de prensa con información detallada
-                    sobre el proyecto, fotografías en alta resolución y datos relevantes.
-                  </p>
-                  <p>
-                    Para solicitar el kit de prensa o coordinar una visita, por favor contáctanos a
-                    través de nuestro formulario de contacto o directamente a nuestro correo de
-                    prensa.
-                  </p>
-                </div>
-                <div className="flex flex-col gap-4 min-[400px]:flex-row">
-                  <Link href="/contacto">
-                    <Button className="bg-[#1B4332] text-white hover:bg-[#2D6A4F]">
-                      Solicitar Kit de Prensa
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-              <div className="relative aspect-video overflow-hidden rounded-lg">
-                <Image
-                  src="/test.jpg"
-                  alt="Kit de Prensa El Buchén"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
+        <ContactSection />
       </main>
     </div>
   )
